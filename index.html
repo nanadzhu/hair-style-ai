@@ -23,7 +23,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:16px;pa
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师现场专业辅助工具</div></div></div><div class="status">本地运行 · 暂未接入AI接口</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师现场专业辅助工具</div></div></div><div class="status">ChatGPT辅助分析 · 无需API</div></header>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">CONSULTATION WORKFLOW</div><h1>先看懂一个人，<br><span>再设计她的发型。</span></h1><p>把照片观察、九型风格、九季色彩和顾客真实需求放进同一套流程。由发型师判断，工具负责整理依据与沟通方案。</p></div><aside class="hero-note"><strong>设计原则</strong><p>不凭一张照片武断定型，不把辅助规则说成AI识别。所有结论都可以修改，最终方案由发型师审核。</p></aside></section>
 <nav class="steps" aria-label="分析步骤"><span class="step-pill"><b>01</b>照片与需求</span><span class="step-pill"><b>02</b>九型风格</span><span class="step-pill"><b>03</b>九季色彩</span><span class="step-pill"><b>04</b>现场观察</span><span class="step-pill"><b>05</b>设计报告</span></nav>
 <div class="layout">
@@ -31,7 +31,18 @@ header{display:flex;justify-content:space-between;align-items:center;gap:16px;pa
 <label class="upload" for="photo"><input id="photo" type="file" accept="image/*"><div class="upload-content" id="uploadCopy"><div class="upload-icon">＋</div><strong>点击选择顾客照片</strong><small>建议正面、自然光、无遮挡</small></div><img id="preview" alt="顾客照片预览"></label><p class="privacy">为保护顾客隐私，请先取得顾客同意。关闭或刷新页面后，照片预览不会作为云端档案保存。</p>
 <div class="field"><label class="field-title" for="goal">顾客这次最想解决什么？</label><select class="select" id="goal"><option value="">请选择主要诉求</option><option>显脸小、修饰脸型</option><option>增加发根蓬松度</option><option>想烫发但怕显老</option><option>想要自然、好打理</option><option>改变气质但不想变化太大</option><option>遮盖白发或改善发色</option><option>由发型师综合设计</option></select></div>
 <div class="field"><label class="field-title" for="care">日常打理时间</label><select class="select" id="care"><option value="">请选择</option><option>几乎不打理，希望洗吹即可</option><option>每天约5分钟</option><option>每天约10—15分钟</option><option>愿意认真打理造型</option></select></div>
-<div class="field"><label class="field-title" for="history">发质 / 烫染史 / 需要注意的情况</label><textarea class="textinput" id="history" rows="3" placeholder="例如：细软、发根容易塌；半年内染过深色；发尾偏干……"></textarea></div></section>
+<div class="field"><label class="field-title" for="history">发质 / 烫染史 / 需要注意的情况</label><textarea class="textinput" id="history" rows="3" placeholder="例如：细软、发根容易塌；半年内染过深色；发尾偏干……"></textarea></div>
+<div class="field" style="border-top:1px solid var(--line);padding-top:16px">
+  <span class="field-title">照片第一步：让 ChatGPT 独立观察</span>
+  <p class="hint">不需要 Google API 密钥。点击后会准备专业分析指令并打开 ChatGPT；出于隐私与浏览器限制，你需要在 ChatGPT 新页面手动上传同一张照片，再粘贴指令。照片不会由本工具自动传过去。</p>
+  <div class="actions"><button type="button" class="btn" id="launchAI">复制分析指令并打开 ChatGPT</button></div>
+  <div id="aiPromptBox" style="display:none;margin-top:12px">
+    <label class="field-title" for="aiPrompt">专业照片分析指令（可复制）</label>
+    <textarea id="aiPrompt" class="textinput" rows="10" readonly></textarea>
+    <p class="hint" id="aiPromptStatus">请在 ChatGPT 中上传照片，再粘贴这段指令。不要把照片分析当作最终诊断。</p>
+    <button type="button" class="btn secondary" id="copyPromptAgain" style="margin-top:8px">重新复制指令</button>
+  </div>
+</div></section>
 <section class="panel"><div class="panel-head"><div class="num">02</div><div><h2>九型风格判断</h2><p class="sub">由发型师根据五官曲直、量感与整体动静选择。</p></div></div>
 <div class="field"><span class="field-title">五官与轮廓的曲直</span><div class="choices" data-group="curve"><button class="choice" aria-pressed="false" data-value="直线">直线感明显</button><button class="choice" aria-pressed="false" data-value="均衡">曲直均衡</button><button class="choice" aria-pressed="false" data-value="曲线">曲线感明显</button></div></div>
 <div class="field"><span class="field-title">整体量感</span><div class="choices" data-group="volume"><button class="choice" aria-pressed="false" data-value="小">小量感</button><button class="choice" aria-pressed="false" data-value="中">中量感</button><button class="choice" aria-pressed="false" data-value="大">大量感</button></div></div>
@@ -54,7 +65,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:16px;pa
 <section class="panel full"><div class="panel-head"><div class="num">05</div><div><h2>生成专业设计沟通报告</h2><p class="sub">将已填写的信息整理为可修改、可打印的现场沟通底稿。</p></div></div>
 <div class="actions"><button class="btn" id="makeReport">整理设计报告</button><button class="btn secondary" id="savePrint">打印 / 保存 PDF</button><button class="btn ghost" id="reset">重新填写</button></div>
 <div id="report" class="result"><div class="report-top"><div><div class="eyebrow">STYLIST CONSULTATION REPORT</div><h2>顾客发型设计沟通报告</h2><p class="sub" id="reportDate"></p></div><span class="status">发型师审核稿</span></div><div id="reportGrid" class="report-grid"></div><p class="disclaimer">本报告由本地规则整理已填写的信息，不是AI照片识别结果，也不替代发型师对头皮、发质、头型、发流及烫染风险的现场检查。未经确认的结论请勿当作诊断向顾客承诺。</p></div>
-<div class="inline-note">当前版本不需要 Google API 密钥，不会自动识别照片，也不会生成虚假的发型效果图。下一阶段再决定接入哪种真实分析服务。</div></section>
+<div class="inline-note">当前版本无需 Google API 密钥：通过“复制分析指令并打开 ChatGPT”，由发型师手动上传照片进行独立辅助分析。照片不会自动传输，分析结果仍需现场复核；本网页本身不会自动识别照片，也不会生成虚假的发型效果图。</div></section>
 </div><div class="footer">朱老师发型研究室 · 以专业判断为基础，以顾客真实需求为起点</div>
 </main>
 <script>
@@ -63,6 +74,21 @@ const state={};const $=id=>document.getElementById(id);
 document.querySelectorAll('[data-group]').forEach(group=>{group.addEventListener('click',e=>{const b=e.target.closest('button[data-value]');if(!b)return;const key=group.dataset.group;const val=b.dataset.value;if(key==='secondary'&&state[key]===val){delete state[key];b.setAttribute('aria-pressed','false')}else{state[key]=val;group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))}refresh()})});
 function refresh(){const c=$('primaryStyle').value;const cues=['曲直：'+(state.curve||'未记录'),'量感：'+(state.volume||'未记录'),'动静：'+(state.motion||'未记录')].join('；');$('stylePreview').textContent='现场线索：'+cues+'。'+(c?'发型师复核主风格：'+c+'。':'主风格尚未确认，请结合五官细节、整体形体、第一眼观感与交流状态综合判断。')+(state.secondary?' 辅助风格：'+state.secondary+'。':'');const season=$('season').value;const tone=$('tone').value;const depth=state.depth;const matrix={'浅':{'暖':'春（浅暖）','中性':'春夏（浅中性）','冷':'夏（浅冷）'},'中':{'暖':'春秋（中暖）','中性':'柔和（中中性）','冷':'夏冬（中冷）'},'深':{'暖':'秋（深暖）','中性':'秋冬（深中性）','冷':'冬（深冷）'}};const suggestion=matrix[depth]&&matrix[depth][tone];$('colorPreview').textContent=(suggestion?'九宫格对应参考：'+suggestion+'。':'请先复核冷暖底调与明度承载，才能对应九宫格。')+(season?' 已记录发型师最终结论：'+season+'。':' 最终结论尚未确认。')+' 发色仍需结合底色、染烫史、发质状态与顾客维护意愿决定。'}
 $('season').addEventListener('change',refresh);$('tone').addEventListener('change',refresh);$('primaryStyle').addEventListener('change',refresh);
+function buildPhotoPrompt(){return `你是发型师现场使用的专业美学辅助分析助手。请只根据我上传的这张顾客照片，先独立做“可见特征观察”，不要迎合发型师预设，也不要把推测说成事实。
+目标：辅助专业发型师判断五官与整体形体的曲直、量感、动静线索，并提出九型风格候选及证据。九型名称采用：少年型、少女型、自然型、优雅型、浪漫型、戏剧型、睿智型、灵动型、华贵型。
+请按以下结构回答：
+1. 照片条件与局限：拍摄角度、光线、表情、遮挡等哪些因素会影响判断。
+2. 可见观察：只描述照片中看得到的脸部轮廓、五官线条、比例关系、整体量感；区分“观察到的事实”和“解释”。
+3. 曲直判断：偏直线、偏曲线或均衡，并逐条说明可见依据；若照片不足请标记不确定。
+4. 量感判断：小、中、大或暂不能判断，并说明依据。
+5. 动静线索：偏静、偏动或均衡；只作视觉风格线索，不推断性格。
+6. 九型风格候选：给出最多3个候选，按相对匹配度排序；每个候选列出支持证据、相反证据和置信度（高/中/低）。不要强行给唯一结论。
+7. 尚需发型师现场确认的事项：最多3个问题，例如侧面头型、真实发量/发流、动态说话状态或顾客本人想呈现的气质。只有确实影响判断时才提出。
+8. 发型设计的初步启发：给出可讨论的轮廓、长度、刘海或卷度方向，但不承诺效果，也不推荐超出照片证据的结论。
+边界：不判断人格、健康、族裔或其他敏感属性；不根据单张照片判断九季色彩，不凭照片判断发质、发流、烫染史或打理能力。请明确说明这只是发型师的辅助参考，最终由发型师结合现场观察与顾客沟通确认。`;}
+async function copyPhotoPrompt(){const prompt=buildPhotoPrompt();$('aiPromptBox').style.display='block';$('aiPrompt').value=prompt;let copied=false;try{await navigator.clipboard.writeText(prompt);copied=true;}catch(e){$('aiPrompt').focus();$('aiPrompt').select();} $('aiPromptStatus').textContent=copied?'分析指令已复制。请切换到 ChatGPT，手动上传同一张照片并粘贴指令。':'浏览器未允许自动复制。请在下方文本框中按 Ctrl+A，再按 Ctrl+C，然后到 ChatGPT 上传照片并粘贴。';}
+$('launchAI').addEventListener('click',()=>{window.open('https://chatgpt.com/','_blank','noopener,noreferrer');copyPhotoPrompt();});
+$('copyPromptAgain').addEventListener('click',copyPhotoPrompt);
 let photoURL=null;$('photo').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(!f.type.startsWith('image/'))return alert('请选择图片文件');if(photoURL)URL.revokeObjectURL(photoURL);photoURL=URL.createObjectURL(f);$('preview').src=photoURL;$('preview').style.display='block';$('uploadCopy').style.display='none'});
 function card(title,items){const el=document.createElement('article');el.className='report-card';const h=document.createElement('h3');h.textContent=title;el.append(h);items.forEach(([k,v])=>{const p=document.createElement('p');const b=document.createElement('strong');b.textContent=k+'：';p.append(b,document.createTextNode(v||'未填写'));el.append(p)});return el}
 $('makeReport').addEventListener('click',()=>{const goal=$('goal').value,care=$('care').value,season=$('season').value;const grid=$('reportGrid');grid.replaceChildren();grid.append(card('顾客需求与条件',[['主要诉求',goal],['打理时间',care],['发质与烫染史',$('history').value.trim()],['明确避雷',$('avoid').value.trim()]]));grid.append(card('风格判断记录',[['发型师复核主风格',$('primaryStyle').value],['辅助风格',state.secondary],['曲直',state.curve],['量感',state.volume],['动静',state.motion]]));grid.append(card('色彩与现场观察',[['冷暖底调',$('tone').value],['明度承载',state.depth],['九季色彩结论',season],['白色对比',state.white],['金银对比',state.metal],['第一眼印象',state.first],['声音节奏',state.voice],['发型师补充',$('notes').value.trim()]]));let design='请先结合顾客诉求和现场检查，决定剪裁轮廓、长度与卷度。';if(state.curve==='曲线')design='可把柔和弧线、自然卷度列为候选，再根据头型与发质确定层次。';if(state.curve==='直线')design='可把清晰轮廓、利落结构列为候选，避免只追求流行而忽略骨相。';if(state.curve==='均衡')design='可在柔和曲线与清晰结构之间寻找平衡，以顾客想呈现的气质决定方向。';if(state.volume==='小')design+=' 量感偏小，谨慎使用过厚、过重的体积。';if(state.volume==='大')design+=' 量感偏大，可评估更舒展的轮廓和层次。';if(state.motion==='静')design+=' 动静偏静，可优先沟通低对比、柔和的变化。';if(state.motion==='动')design+=' 动静偏动，可评估更鲜明的线条或层次，但需尊重打理能力。';grid.append(card('初步设计沟通方向',[['结构建议',design],['发色方向',season&&season!=='仍需复核'?'仅作色彩沟通参考，需结合底色和染发史复核':'暂不预设发色，先完成现场色彩判断'],['下一步','与顾客确认期望、预算、维护习惯及技术可行性'] ]));$('reportDate').textContent='生成时间：'+new Date().toLocaleString('zh-CN',{hour12:false});$('report').classList.add('visible');$('report').scrollIntoView({behavior:'smooth',block:'start'})});
