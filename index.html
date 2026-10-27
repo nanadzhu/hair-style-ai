@@ -1,95 +1,334 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f6f2eb"><title>朱老师发型设计助手 · 提示词生成器</title><style>
-:root{--bg:#f6f2eb;--paper:#fffdf9;--ink:#292722;--muted:#777168;--line:#e7dfd3;--accent:#9b604d;--accent2:#ead8c8;--green:#5d705d;--shadow:0 12px 34px rgba(52,42,31,.06)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:1080px;margin:auto;padding:22px 18px 64px}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 0 28px}.brand{display:flex;align-items:center;gap:12px;font-weight:750}.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:14px 14px 14px 4px;background:var(--ink);color:#fff;font-size:20px}.status{font-size:12px;border:1px solid var(--line);background:#fffaf3;border-radius:999px;padding:7px 12px;color:var(--muted)}
-.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch;margin-bottom:24px}.hero-copy,.hero-note{border-radius:24px;padding:28px;background:var(--paper);border:1px solid var(--line)}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:800}.hero h1{font-size:clamp(30px,4vw,46px);line-height:1.2;letter-spacing:-.04em;margin:10px 0 14px}.hero h1 span{color:var(--accent)}.hero p{color:var(--muted);margin:0}.hero-note{background:#eee4d8;display:flex;flex-direction:column;justify-content:center}.hero-note strong{font-size:18px;margin-bottom:8px}.hero-note p{font-size:14px}
-.steps{display:flex;gap:8px;overflow:auto;padding:2px 0 18px}.step-pill{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:8px 13px;background:#fffaf5;color:var(--muted);font-size:13px}.step-pill b{color:var(--accent);margin-right:5px}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:23px;box-shadow:var(--shadow);min-width:0}.panel.full{grid-column:1/-1}.panel-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}.num{flex:0 0 34px;height:34px;border-radius:11px;background:var(--accent2);color:#69483a;display:grid;place-items:center;font-weight:800}.panel h2{font-size:20px;line-height:1.35;margin:2px 0 4px}.sub{font-size:13px;color:var(--muted);margin:0}
-.upload{display:flex;align-items:center;justify-content:center;text-align:center;min-height:205px;border:1.5px dashed #cdbba9;border-radius:16px;background:#faf6f0;overflow:hidden;position:relative;padding:18px}.upload input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.upload-content{pointer-events:none}.upload-icon{font-size:31px;color:var(--accent)}.upload strong{display:block}.upload small{color:var(--muted)}#preview{display:none;max-width:100%;max-height:360px;object-fit:contain;border-radius:12px}.privacy{font-size:12px;color:var(--muted);margin:10px 0 0}
-.field{margin-top:19px}.field-title{font-weight:750;font-size:14px;margin-bottom:9px;display:block}.choices{display:flex;flex-wrap:wrap;gap:8px}.choice{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;color:#5d574f;min-height:40px}.choice[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}.hint{font-size:12px;color:var(--muted);margin-top:7px}.select,.textinput{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;color:var(--ink)}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.btn{border:0;border-radius:12px;padding:12px 17px;min-height:44px;background:var(--accent);color:white;font-weight:750}.btn.secondary{background:#eee6dc;color:var(--ink)}.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}.btn:focus-visible,.choice:focus-visible{outline:3px solid #d5a68e;outline-offset:2px}
-.inline-note{background:#f4e9dd;border-radius:13px;padding:13px 15px;font-size:13px;color:#705448;margin-top:16px}.result{display:none}.result.visible{display:block}.report-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.report h2{font-size:25px}.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.report-card{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff}.report-card h3{font-size:15px;margin:0 0 8px}.report-card p{font-size:14px;margin:5px 0;color:#625b53}.report-card strong{color:var(--ink)}.disclaimer{font-size:12px;color:var(--muted);margin-top:15px}.footer{text-align:center;font-size:12px;color:#91887e;margin-top:28px}
-@media(max-width:720px){.wrap{padding:14px 12px 42px}header{padding-bottom:18px}.hero{grid-template-columns:1fr;gap:12px}.hero-copy,.hero-note{padding:22px}.layout{grid-template-columns:1fr}.panel.full{grid-column:auto}.panel{padding:18px}.report-grid{grid-template-columns:1fr}.status{max-width:125px;text-align:center}}
-@media print{body{background:white}.wrap{max-width:none;padding:0}.steps,header,.hero,.layout>.panel:not(.report),.actions,.footer{display:none!important}.panel{box-shadow:none;border:0;padding:0}.result{display:block!important}.report{display:block!important}.report-grid{grid-template-columns:1fr 1fr}}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f2eb">
+<title>朱老师发型设计助手</title>
+<style>
+:root{--bg:#f6f2eb;--paper:#fffdf9;--ink:#2c2925;--muted:#77716a;--line:#e6ded2;--accent:#715c45;--accent2:#efe5d7;--good:#426b52;--radius:18px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55}
+main{max-width:860px;margin:0 auto;padding:22px 14px 54px}
+.hero{padding:24px 22px;background:#e9dfd1;border-radius:24px;margin-bottom:16px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:#6d5b49;font-weight:700}
+h1{font-size:27px;line-height:1.25;margin:8px 0 10px}
+.hero p{margin:0;color:#62584e;font-size:14px}
+.notice{margin-top:16px;padding:12px 14px;border:1px solid #d5c6b3;border-radius:13px;background:#f8f2e9;font-size:13px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);margin:14px 0;overflow:hidden}
+.panel-head{display:flex;gap:12px;align-items:flex-start;padding:17px 18px 12px}
+.num{width:32px;height:32px;flex:none;border-radius:11px;background:var(--accent2);display:grid;place-items:center;font-weight:800;color:#604b35}
+.panel h2{font-size:17px;margin:2px 0 3px}
+.desc{font-size:12px;color:var(--muted);margin:0}
+.panel-body{padding:0 18px 19px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{min-width:0}
+.field.full{grid-column:1/-1}
+label,.field-label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+select{width:100%;min-height:45px;border:1px solid #d9d0c4;border-radius:12px;background:#fff;padding:10px 12px;color:var(--ink);font:inherit;font-size:14px}
+select:focus,button:focus,summary:focus{outline:2px solid #a9957d;outline-offset:2px}
+.help{font-size:11px;color:var(--muted);margin:5px 1px 0}
+details.group{border:1px solid var(--line);border-radius:13px;margin:10px 0;background:#fff}
+details.group summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;font-size:14px;font-weight:700}
+details.group summary::-webkit-details-marker{display:none}
+details.group summary:after{content:"＋";color:var(--accent);font-size:18px}
+details.group[open] summary:after{content:"－"}
+.checks{padding:0 13px 13px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.check{display:flex;gap:8px;align-items:flex-start;padding:9px 10px;border:1px solid #e9e2d8;border-radius:10px;background:#fffdfa;font-size:13px;font-weight:400;cursor:pointer}
+.check input{margin:3px 0 0;accent-color:var(--accent);flex:none}
+.subsection{margin:14px 0 5px;font-size:13px;font-weight:800;color:#655543}
+.hidden{display:none!important}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+button{border:0;border-radius:12px;padding:12px 16px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.primary{background:var(--accent);color:#fff}
+.secondary{background:#eee5d9;color:#3c3329}
+.ghost{background:transparent;border:1px solid #d7cbbb;color:#554b40}
+.output{width:100%;min-height:260px;resize:vertical;padding:13px;border:1px solid #d9d0c4;border-radius:13px;background:#fff;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;color:#302a24}
+.status{font-size:12px;color:var(--good);min-height:18px;margin-top:7px}
+.footer{text-align:center;font-size:12px;color:var(--muted);padding:14px 8px}
+.pill{display:inline-block;border-radius:99px;background:#fff9ef;border:1px solid #e2d3bf;color:#6b5742;padding:4px 9px;font-size:11px;margin:12px 5px 0 0}
+@media(max-width:560px){main{padding:12px 10px 36px}.hero{padding:20px 17px}h1{font-size:24px}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel-head{padding:15px 14px 10px}.panel-body{padding:0 14px 16px}.checks{grid-template-columns:1fr 1fr}.actions button{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="eyebrow">ZHU TEACHER · HAIR DESIGN WORKFLOW</div>
+    <h1>朱老师发型设计助手</h1>
+    <p>现场采集顾客信息，自动整理成完整 AI 分析提示词。照片只需在 ChatGPT 对话中上传一次。</p>
+    <div class="notice"><strong>工作流程：</strong>选择资料 → 生成完整提示词 → 一键复制 → 打开 ChatGPT，粘贴提示词并上传顾客照片。此网页不上传、不保存顾客照片。</div>
+    <span class="pill">选项优先，无需手动判型</span><span class="pill">自动附加锁脸规则</span><span class="pill">支持手机操作</span>
+  </header>
 
-textarea.output{min-height:370px;line-height:1.7}details{border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:15px;background:#faf7f2}summary{cursor:pointer;font-weight:700}.checkrow{display:flex;flex-wrap:wrap;gap:9px}.checkrow label{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-size:14px}.checkrow input{margin-right:5px}.notice{font-size:13px;color:#705448}.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:560px){.grid-two{grid-template-columns:1fr}}
-</style></head><body><main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · AI 分析提示词生成器</div></div></div><div class="status">V1.1 · 不需要 API</div></header>
-<section class="hero"><div class="hero-copy"><div class="eyebrow">STYLIST FIRST · AI SECOND</div><h1>你拍照片，<br><span>AI 做专业分析。</span></h1><p>网页负责记录顾客条件并生成提示词；把照片和提示词交给 ChatGPT，由 AI 独立判断九型风格、初筛九季色彩并推荐发型。</p></div><aside class="hero-note"><strong>不需要你提前判型</strong><p>不要求发型师选择少女型、优雅型等答案。你只提供看得到、问得到的信息；AI 必须先给判断依据，再给设计方案。</p></aside></section>
-<nav class="steps" aria-label="使用步骤"><span class="step-pill"><b>01</b>上传照片</span><span class="step-pill"><b>02</b>顾客条件</span><span class="step-pill"><b>03</b>可选现场线索</span><span class="step-pill"><b>04</b>生成提示词</span><span class="step-pill"><b>05</b>交给 ChatGPT</span></nav>
-<div class="layout">
-<section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">照片仅在你的浏览器里预览，不自动传给 AI。</p></div></div>
-<label class="upload" for="photo"><input id="photo" type="file" accept="image/*"><div class="upload-content" id="uploadCopy"><div class="upload-icon">＋</div><strong>点这里选择顾客照片</strong><small>优先正面清晰、光线均匀、无遮挡的照片</small></div><img id="preview" alt="顾客照片预览"></label>
-<p class="privacy">请先获得顾客对拍照、向第三方 AI 上传照片的知情同意。生成的提示词不包含图片文件，需另行在 ChatGPT 上传。</p>
-<div class="field"><label class="field-title" for="goal">这次最想解决什么？</label><select class="select" id="goal"><option value="">未确定，交给发型师综合设计</option><option>修饰脸型与轮廓</option><option>改变刘海</option><option>发根蓬松、修饰头型</option><option>希望烫发或增加纹理</option><option>想换发色或处理白发</option><option>想改变气质但不想变化太大</option><option>希望更自然、容易打理</option></select></div>
-<div class="grid-two">
-<div class="field"><label class="field-title" for="currentLength">目前长度</label><select class="select" id="currentLength"><option value="">未填写</option><option>超短发</option><option>耳上或耳下短发</option><option>下巴附近</option><option>肩部附近</option><option>锁骨附近</option><option>胸部及以下</option></select></div>
-<div class="field"><label class="field-title" for="targetLength">期望长度</label><select class="select" id="targetLength"><option value="">未确定</option><option>尽量保留现有长度</option><option>超短发</option><option>耳上或耳下短发</option><option>下巴附近</option><option>肩部附近</option><option>锁骨附近</option><option>胸部及以下</option><option>由发型师建议</option></select></div></div>
-<div class="field"><span class="field-title">想做的项目（可多选）</span><div class="checkrow"><label><input type="checkbox" name="service" value="剪发">剪发</label><label><input type="checkbox" name="service" value="烫发">烫发</label><label><input type="checkbox" name="service" value="染发">染发</label><label><input type="checkbox" name="service" value="先咨询、未决定">先咨询</label></div></div>
-</section>
-<section class="panel"><div class="panel-head"><div class="num">02</div><div><h2>顾客实际条件</h2><p class="sub">只填你已确定的信息；不确定就留空。</p></div></div>
-<div class="grid-two"><div class="field"><label class="field-title" for="texture">发丝粗细</label><select class="select" id="texture"><option value="">未检查</option><option>细软</option><option>中等</option><option>粗硬</option><option>粗细混合</option></select></div><div class="field"><label class="field-title" for="density">发量</label><select class="select" id="density"><option value="">未检查</option><option>偏少</option><option>中等</option><option>偏多</option></select></div></div>
-<div class="grid-two"><div class="field"><label class="field-title" for="naturalWave">自然卷与毛躁</label><select class="select" id="naturalWave"><option value="">未检查</option><option>基本直发</option><option>轻微自然卷</option><option>明显自然卷</option><option>易毛躁蓬乱</option></select></div><div class="field"><label class="field-title" for="damage">发质健康状态</label><select class="select" id="damage"><option value="">未检查</option><option>状态较好</option><option>轻度干燥受损</option><option>明显受损或弹性异常</option></select></div></div>
-<div class="field"><label class="field-title" for="care">日常打理意愿</label><select class="select" id="care"><option value="">未询问</option><option>几乎不打理，洗吹即可</option><option>每天约5分钟</option><option>每天约10—15分钟</option><option>愿意用吹风机和造型品认真打理</option></select></div>
-<div class="field"><label class="field-title" for="history">近一年烫染历史或发质补充</label><textarea class="textinput" id="history" rows="3" placeholder="例：3个月前烫过；发尾干；前额有旋；不清楚可空着"></textarea></div>
-<div class="field"><label class="field-title" for="avoid">顾客不喜欢 / 不能接受的效果</label><input class="textinput" id="avoid" placeholder="例：怕显成熟、不要厚刘海、不接受漂发"></div>
-</section>
-<section class="panel full"><div class="panel-head"><div class="num">03</div><div><h2>可选的现场辅助线索</h2><p class="sub">不必为了生成提示词而强迫填写；有帮助时再展开。</p></div></div>
-<details><summary>展开：第一眼观感、声音、头型与色布测试</summary>
-<div class="grid-two"><div class="field"><label class="field-title" for="first">第一眼整体观感</label><select class="select" id="first"><option value="">未记录</option><option>亲切、柔和、容易接近</option><option>自然、随性</option><option>利落、有距离感</option><option>鲜明、富有张力</option><option>其他（写在补充备注）</option></select></div><div class="field"><label class="field-title" for="voice">说话声音 / 节奏</label><select class="select" id="voice"><option value="">未记录</option><option>轻柔、语速慢</option><option>音量语速适中</option><option>响亮、语速快</option><option>声音与第一眼观感有反差</option></select></div></div>
-<div class="field"><label class="field-title" for="headNotes">头型、发根方向及其他观察</label><textarea class="textinput" id="headNotes" rows="2" placeholder="例如：后脑勺偏平、顶部易塌、额角发流偏向右侧"></textarea></div>
-<div class="grid-two"><div class="field"><label class="field-title" for="white">纯白与米白对比</label><select class="select" id="white"><option value="">没测</option><option>纯白更协调</option><option>米白更协调</option><option>差异不明显</option></select></div><div class="field"><label class="field-title" for="metal">金银色对比</label><select class="select" id="metal"><option value="">没测</option><option>金色更协调</option><option>银色更协调</option><option>差异不明显</option></select></div></div>
-<div class="field"><label class="field-title" for="depth">深浅色布对比</label><select class="select" id="depth"><option value="">没测</option><option>浅色更协调</option><option>深色更协调</option><option>深浅差异不明显</option></select></div>
-</details></section>
-<section class="panel full"><div class="panel-head"><div class="num">04</div><div><h2>生成完整 AI 设计提示词</h2><p class="sub">提示词把照片观察、九型分析、九季色彩、发型方案组合成一个完整任务。</p></div></div>
-<div class="actions"><button class="btn" type="button" id="generate">生成专业提示词</button><button class="btn secondary" type="button" id="copy" disabled>复制提示词</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button><button class="btn ghost" type="button" id="reset">清空重来</button></div>
-<div id="result" class="result"><div class="field"><label class="field-title" for="promptOutput">已经生成，可长按选择或点击复制</label><textarea id="promptOutput" class="textinput output" readonly></textarea><p class="notice" id="status">注意：请在 ChatGPT 对话中另外上传这位顾客的照片，再粘贴提示词。网页不会自动传照片。</p></div></div>
-<div class="inline-note">这不是 AI 识别程序。九型风格与九季色彩由接收照片的 AI 独立推理；色彩受光线影响，普通照片不足以确认具体季型。烫染安全和可实施性以发型师现场检查为准。</div>
-</section></div><div class="footer">朱老师发型研究室 · 专业发型师工作流 · 版本 1.1</div></main>
+  <section class="panel">
+    <div class="panel-head"><div class="num">01</div><div><h2>顾客基础资料</h2><p class="desc">只记录影响设计决策的当前状态与过往处理史。</p></div></div>
+    <div class="panel-body">
+      <div class="grid">
+        <div class="field"><label for="currentLength">当前头发长度</label><select id="currentLength"><option value="">请选择</option><option>超短发</option><option>齐耳</option><option>齐下巴</option><option>齐肩</option><option>锁骨</option><option>胸上</option><option>胸下</option><option>其他（更短或更长）</option></select></div>
+        <div class="field"><label for="naturalTexture">原生发质状态</label><select id="naturalTexture"><option value="">请选择</option><option>正常</option><option>细软</option><option>正常偏细软</option><option>粗硬</option><option>砂发</option><option>自然卷</option><option>暂时无法判断</option></select></div>
+      </div>
+      <div class="subsection">烫染过往史</div>
+      <p class="desc">每项单独记录，不与当前发质混在一起。</p>
+      <div class="grid" style="margin-top:12px">
+        <div class="field"><label for="straightHistory">做过拉直／离子烫</label><select id="straightHistory" data-history="拉直／离子烫"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
+        <div class="field"><label for="proteinHistory">做过蛋白矫正／酸性顺直</label><select id="proteinHistory" data-history="蛋白矫正／酸性顺直"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
+        <div class="field"><label for="permHistory">烫过卷发</label><select id="permHistory" data-history="烫过卷发"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
+        <div class="field"><label for="dyeHistory">染过头发</label><select id="dyeHistory" data-history="染过头发"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
+        <div class="field"><label for="bleachHistory">漂过头发</label><select id="bleachHistory" data-history="漂过头发"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
+        <div class="field"><label for="lastTreatment">最近一次烫染的大致时间</label><select id="lastTreatment"><option value="">请选择</option><option>1个月内</option><option>1—3个月</option><option>3—6个月</option><option>6—12个月</option><option>1年以上</option><option>不清楚</option></select></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div class="num">02</div><div><h2>顾客本次需求</h2><p class="desc">先选择需求类型，再根据类型展开对应选项。</p></div></div>
+    <div class="panel-body">
+      <div class="field"><label for="needType">这次主要想做什么？</label><select id="needType"><option value="">请选择</option><option value="change">想改变发型（通常有自己的想法或参考图）</option><option value="problem">想解决现有头发问题</option><option value="unsure">不确定，希望发型师综合设计</option></select></div>
+      <div id="changePanel" class="hidden">
+        <div class="subsection">想改变的方向（可多选）</div>
+        <div class="checks">
+          <label class="check"><input type="checkbox" name="changeDirection" value="改变刘海">改变刘海</label>
+          <label class="check"><input type="checkbox" name="changeDirection" value="改变长度">改变长度</label>
+          <label class="check"><input type="checkbox" name="changeDirection" value="改变层次与轮廓">改变层次与轮廓</label>
+          <label class="check"><input type="checkbox" name="changeDirection" value="改变卷度或纹理">改变卷度或纹理</label>
+          <label class="check"><input type="checkbox" name="changeDirection" value="改变发色">改变发色</label>
+          <label class="check"><input type="checkbox" name="changeDirection" value="整体风格改变">整体风格改变</label>
+          <label class="check"><input type="checkbox" name="changeDirection" value="参考图片中的发型">参考图片中的发型</label>
+        </div>
+      </div>
+      <div id="problemPanel" class="hidden">
+        <div class="subsection">想解决的具体问题（可多选）</div>
+        <details class="group"><summary>烫发与卷度问题</summary><div class="checks">
+          <label class="check"><input type="checkbox" name="hairProblem" value="卷太小，显老气">卷太小，显老气</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="卷度位置不对，显脸大">卷度位置不对，显脸大</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="卷度维持时间短">卷度维持时间短</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="卷发太夸张，不适合职场">卷发太夸张，不适合职场</label>
+        </div></details>
+        <details class="group"><summary>日常打理与发质问题</summary><div class="checks">
+          <label class="check"><input type="checkbox" name="hairProblem" value="回家不会吹，不好打理">回家不会吹，不好打理</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="烫后毛躁、炸毛">烫后毛躁、炸毛</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="头发缺少蓬松感">头发缺少蓬松感</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="头发干枯、打结">头发干枯、打结</label>
+        </div></details>
+        <details class="group"><summary>染发颜色问题</summary><div class="checks">
+          <label class="check"><input type="checkbox" name="hairProblem" value="染完发黄、橘调重">染完发黄、橘调重</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="颜色太亮或太扎眼">颜色太亮或太扎眼</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="掉色快或掉色后发花">掉色快或掉色后发花</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="颜色衬得脸色暗沉">颜色衬得脸色暗沉</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="新生黑发根分界明显">新生黑发根分界明显</label>
+        </div></details>
+        <details class="group"><summary>剪发与整体效果问题</summary><div class="checks">
+          <label class="check"><input type="checkbox" name="hairProblem" value="发型显老气">发型显老气</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="长度或轮廓不合适">长度或轮廓不合适</label>
+          <label class="check"><input type="checkbox" name="hairProblem" value="不清楚自己适合什么发型">不清楚自己适合什么发型</label>
+        </div></details>
+      </div>
+      <div id="unsurePanel" class="hidden notice">顾客暂时没有明确方向。请 AI 根据照片、基础资料和现场观察独立分析，不要替顾客虚构偏好。</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div class="num">03</div><div><h2>具体设计要求</h2><p class="desc">全部用选项采集；希望长度沿用同一套长度分类。</p></div></div>
+    <div class="panel-body">
+      <div class="grid">
+        <div class="field"><label for="targetLength">希望保留／达到的长度</label><select id="targetLength"><option value="">请选择</option><option>超短发</option><option>齐耳</option><option>齐下巴</option><option>齐肩</option><option>锁骨</option><option>胸上</option><option>胸下</option><option>其他（更短或更长）</option><option>听取发型师建议</option></select></div>
+        <div class="field"><label for="targetTexture">希望的头发纹理</label><select id="targetTexture"><option value="">请选择</option><option>直发</option><option>自然纹理</option><option>自然大弯</option><option>波浪卷</option><option>法式卷</option><option>羊毛卷</option><option>听取发型师建议</option></select></div>
+        <div class="field"><label for="colorDepth">喜欢的发色深浅</label><select id="colorDepth"><option value="">请选择</option><option>深色</option><option>浅色</option><option>听取发型师建议</option></select></div>
+        <div class="field"><label for="colorTone">喜欢的发色色调</label><select id="colorTone"><option value="">请选择</option><option>偏冷色调</option><option>偏暖色调</option><option>听取发型师建议</option></select></div>
+        <div class="field"><label for="colorMethod">希望的染色方式</label><select id="colorMethod"><option value="">请选择</option><option>普通整体染发</option><option>设计染（如挑染、渐变等）</option><option>不染发</option><option>听取发型师建议</option></select></div>
+        <div class="field"><label for="stylingTime">每天愿意花多少时间打理</label><select id="stylingTime"><option value="">请选择</option><option>几乎不打理，洗吹即可</option><option>约5分钟</option><option>约10—15分钟</option><option>15分钟以上</option><option>愿意学习吹风造型</option></select></div>
+      </div>
+      <div class="subsection">顾客明确不喜欢什么（可多选）</div>
+      <p class="desc">按真实顾客常见顾虑分组；不包含已决定删除的价格营销、沟通及“成品与预期差距”项目。</p>
+      <details class="group"><summary>刘海与剪发</summary><div class="checks">
+        <label class="check"><input type="checkbox" name="dislike" value="不喜欢有刘海">不喜欢有刘海</label>
+        <label class="check"><input type="checkbox" name="dislike" value="不喜欢厚重刘海">不喜欢厚重刘海</label>
+        <label class="check"><input type="checkbox" name="dislike" value="不喜欢剪得太短">不喜欢剪得太短</label>
+        <label class="check"><input type="checkbox" name="dislike" value="不喜欢发型显老气">不喜欢发型显老气</label>
+      </div></details>
+      <details class="group"><summary>烫发效果</summary><div class="checks">
+        <label class="check"><input type="checkbox" name="dislike" value="小卷显老气">小卷显老气</label>
+        <label class="check"><input type="checkbox" name="dislike" value="过于夸张、不适合职场">过于夸张、不适合职场</label>
+      </div></details>
+      <details class="group"><summary>日常打理</summary><div class="checks">
+        <label class="check"><input type="checkbox" name="dislike" value="回家不会吹、不好打理">回家不会吹、不好打理</label>
+        <label class="check"><input type="checkbox" name="dislike" value="烫后毛躁、炸毛">烫后毛躁、炸毛</label>
+        <label class="check"><input type="checkbox" name="dislike" value="卷度维持时间短">卷度维持时间短</label>
+        <label class="check"><input type="checkbox" name="dislike" value="需要复杂造型">需要复杂造型</label>
+        <label class="check"><input type="checkbox" name="dislike" value="不想花时间打理">不想花时间打理</label>
+      </div></details>
+      <details class="group"><summary>染发颜色</summary><div class="checks">
+        <label class="check"><input type="checkbox" name="dislike" value="染完发黄、橘调重">染完发黄、橘调重</label>
+        <label class="check"><input type="checkbox" name="dislike" value="颜色饱和度太高、太扎眼">颜色饱和度太高、太扎眼</label>
+        <label class="check"><input type="checkbox" name="dislike" value="掉色快或掉色后发花">掉色快或掉色后发花</label>
+        <label class="check"><input type="checkbox" name="dislike" value="颜色衬得脸色暗沉、显憔悴">颜色衬得脸色暗沉、显憔悴</label>
+        <label class="check"><input type="checkbox" name="dislike" value="新生黑发根分界尴尬">新生黑发根分界尴尬</label>
+        <label class="check"><input type="checkbox" name="dislike" value="不喜欢漂头发">不喜欢漂头发</label>
+      </div></details>
+      <details class="group"><summary>发质与头皮</summary><div class="checks">
+        <label class="check"><input type="checkbox" name="dislike" value="染后干枯、打结">染后干枯、打结</label>
+        <label class="check"><input type="checkbox" name="dislike" value="担心药水气味刺激">担心药水气味刺激</label>
+        <label class="check"><input type="checkbox" name="dislike" value="担心头皮刺痛或敏感">担心头皮刺痛或敏感</label>
+      </div></details>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div class="num">04</div><div><h2>现场观察</h2><p class="desc">由发型师面对面观察，仅作辅助证据，不替代 AI 对照片的独立分析。</p></div></div>
+    <div class="panel-body">
+      <div class="grid">
+        <div class="field"><label for="firstImpression">第一眼整体观感</label><select id="firstImpression"><option value="">请选择</option><option>柔和亲切</option><option>自然随性</option><option>利落</option><option>有距离感</option><option>多种感觉并存</option></select></div>
+        <div class="field"><label for="voiceQuality">听觉特征：声音</label><select id="voiceQuality"><option value="">请选择</option><option>轻柔</option><option>响亮</option><option>沙哑</option><option>平常</option></select></div>
+        <div class="field"><label for="speechTempo">听觉特征：语气／语调节奏</label><select id="speechTempo"><option value="">请选择</option><option>快</option><option>慢</option><option>平常</option></select></div>
+        <div class="field"><label for="skinTone">现场肤色冷暖判断</label><select id="skinTone"><option value="">请选择</option><option>偏冷调</option><option>偏暖调</option><option>中性调</option><option>暂时无法判断</option></select></div>
+        <div class="field"><label for="whiteTest">纯白与米白对比</label><select id="whiteTest"><option value="">请选择</option><option>纯白更协调</option><option>米白更协调</option><option>差异不明显</option><option>暂时无法判断</option></select></div>
+        <div class="field"><label for="metalTest">金色与银色对比</label><select id="metalTest"><option value="">请选择</option><option>金色更协调</option><option>银色更协调</option><option>差异不明显</option><option>暂时无法判断</option></select></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><div class="num">05</div><div><h2>生成完整 AI 分析提示词</h2><p class="desc">自动整合所有已选资料与固定规则；未选择的项目明确标记“未提供”。</p></div></div>
+    <div class="panel-body">
+      <div class="actions" style="margin-top:0;margin-bottom:12px"><button class="primary" id="generateBtn" type="button">生成完整提示词</button><button class="ghost" id="resetBtn" type="button">清空本次选择</button></div>
+      <textarea id="promptOutput" class="output" aria-label="生成的完整 AI 提示词" placeholder="点击“生成完整提示词”，这里会自动生成可直接复制给 ChatGPT 的完整内容。" spellcheck="false"></textarea>
+      <div class="actions"><button class="primary" id="copyBtn" type="button">复制完整提示词</button><button class="secondary" id="openChatBtn" type="button">打开 ChatGPT</button></div>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <p class="help">使用方式：先生成并复制整段提示词，再打开 ChatGPT 粘贴提示词，并在同一条对话中上传顾客正面照、侧面照。照片不需要上传到本网页。</p>
+    </div>
+  </section>
+  <div class="footer">朱老师发型设计助手 · 现场采集与提示词生成工具</div>
+</main>
 <script>
 (function(){
-const $=id=>document.getElementById(id);
-const value=id=>$(id).value.trim()||'未提供';
-const list=name=>[...document.querySelectorAll('input[name="'+name+'"]:checked')].map(x=>x.value).join('、')||'未决定';
-let url=null;
-$('photo').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(!f.type.startsWith('image/')){alert('请选择图片');return}if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(f);$('preview').src=url;$('preview').style.display='block';$('uploadCopy').style.display='none'});
-function build(){
-return `你是“朱老师发型设计助手”的专业分析 AI，面向具有丰富经验的女士发型师。请结合我在本条消息中上传的顾客照片与以下现场记录，先独立分析，再提出专业发型方案。发型师并没有预先替你判定九型风格或九季色彩。不得把顾客偏好、主观印象当作视觉事实，不得把未提供的信息自行补齐。
-
-【顾客咨询记录】
-本次需求：${value('goal')}
-目前长度：${value('currentLength')}
-期望长度：${value('targetLength')}
-服务意向：${list('service')}
-发丝粗细：${value('texture')}
-发量：${value('density')}
-自然卷/毛躁：${value('naturalWave')}
-发质健康：${value('damage')}
-打理意愿：${value('care')}
-烫染历史与补充：${value('history')}
-明确不接受：${value('avoid')}
-第一眼现场观感（辅助、非结论）：${value('first')}
-声音节奏（辅助、非结论）：${value('voice')}
-头型/发流现场补充：${value('headNotes')}
-纯白/米白对比：${value('white')}
-金银对比：${value('metal')}
-深浅色布对比：${value('depth')}
-
-【分析任务与规则】
-一、先检查照片条件。描述角度、遮挡、光照、表情对结论的影响；只基于可见信息分析脸型、脸部纵横比例、额颞颧颌轮廓、眉眼鼻唇曲直、五官量感（小/中/大）、动静张力；每个维度分开写“看到的证据”“推断”“不确定之处”。照片看不到的后脑、真实发流、发质触感不要编造。动静线索不能推断性格。
-二、按奕含九型风格的现有分析框架，综合曲直（直/均衡/曲）、量感（小/中/大）与动静，给出主风格候选及至多两个相邻候选，逐项说明支持与反证，不要只看脸型名称定型。九型参考对应为：直小少年型、直中睿智型、直大戏剧型；曲小少女型、曲中优雅型、曲大浪漫型；均衡小灵动型、均衡中自然型、均衡大华贵型。此表是初始映射，不可替代综合研判。如果证据不足，请标为待复核，不得硬判，不得捏造百分比准确率。
-三、九季色彩先尝试初筛而非硬定。参考九宫：浅暖春、浅中性春夏、浅冷夏；中暖春秋、中中性柔和、中冷夏冬；深暖秋、深中性秋冬、深冷冬。照片中的肤色会受白平衡、妆容、光源影响；如果没有可靠对比信息，仅给候选方向与缺少的现场色布测试，严禁用顾客喜好直接判定冷暖。
-四、将风格、色彩候选与发质发量、现有长度、目标长度、头型发流、烫染史、打理时间、顾客禁忌结合，提出3套实用发型方案：优先方案、备选方案、低维护方案。每套分别交代刘海长度形状、剪裁外轮廓、层次高低与重量线、卷度大小及卷区起点（如适合烫发）、发色方向（如适合染发）、日常维护要求，并解释为什么适合。不要凭照片承诺烫发效果，不要推荐与实际长度不符的即时方案；有烫染损伤疑虑时要求现场检查后决定。
-五、明确写出：推荐优先级、为什么排除某些热门但不合适的发型、发型师现场下一步最多需要确认的3项信息，以及一段自然、不硬推销的顾客沟通话术。
-六、输出结构按：A照片可见事实 B九型依据与候选 C九季初筛与局限 D三种方案及风险 E首选建议 F待确认事项 G顾客沟通话术。将事实、现场输入、推测和待验证结论严格分开，专业但不要空话。所有结论供发型师复核。
-
-【重要】
-照片需由我在 ChatGPT 对话中与本提示词一并上传。如果本条消息中没有照片，请先提醒我上传，不要假装看过照片。`;
-}
-$('generate').addEventListener('click',()=>{$('promptOutput').value=build();$('result').classList.add('visible');$('copy').disabled=false;$('status').textContent='提示词已生成。请复制，并把照片和提示词一起发送到 ChatGPT；照片不会从这个网页自动传过去。';$('result').scrollIntoView({behavior:'smooth',block:'start'})});
-$('copy').addEventListener('click',async()=>{const p=$('promptOutput');try{await navigator.clipboard.writeText(p.value);$('status').textContent='已复制提示词！接下来打开 ChatGPT，上传同一张照片，再粘贴发送。'}catch(e){p.focus();p.select();$('status').textContent='系统未允许自动复制。请长按文本框选择全部并复制，再前往 ChatGPT。'}});
-$('openChat').addEventListener('click',()=>window.open('https://chatgpt.com/','_blank','noopener,noreferrer'));
-$('reset').addEventListener('click',()=>{if(!confirm('确定清空本页内容吗？'))return;document.querySelectorAll('select,textarea:not(#promptOutput),input:not([type=file])').forEach(x=>{if(x.type==='checkbox')x.checked=false;else x.value=''});$('photo').value='';if(url){URL.revokeObjectURL(url);url=null}$('preview').removeAttribute('src');$('preview').style.display='none';$('uploadCopy').style.display='';$('result').classList.remove('visible');$('promptOutput').value='';$('copy').disabled=true});
+  const $ = function(id){return document.getElementById(id)};
+  const needType = $("needType");
+  function selected(id){return $(id).value || "未提供";}
+  function checkedValues(name){return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(el){return el.value;});}
+  function valList(items){return items.length ? items.join("、") : "未提供";}
+  function historyText(){
+    const ids=[["straightHistory","是否做过拉直／离子烫"],["proteinHistory","是否做过蛋白矫正／酸性顺直"],["permHistory","是否烫过卷发"],["dyeHistory","是否染过头发"],["bleachHistory","是否漂过头发"]];
+    return ids.map(function(pair){return "- "+pair[1]+"："+selected(pair[0]);}).join("\n")+"\n- 最近一次烫染的大致时间："+selected("lastTreatment");
+  }
+  function prompt(){
+    const need = selected("needType");
+    let change = "未提供";
+    let problems = "未提供";
+    if(needType.value==="change") change=valList(checkedValues("changeDirection"));
+    if(needType.value==="problem") problems=valList(checkedValues("hairProblem"));
+    const dislikes=Array.from(document.querySelectorAll('input[name="dislike"]:checked')).map(function(el){return el.value;});
+    const needLabel = needType.value==="change" ? "想改变发型" : needType.value==="problem" ? "想解决现有头发问题" : needType.value==="unsure" ? "不确定，希望发型师综合设计" : "未提供";
+    return [
+"《朱老师发型设计助手｜顾客综合风格分析与发型设计任务》",
+"",
+"一、你的任务",
+"你是一名专业女士发型设计分析助手。请结合我在本提示词中提供的顾客资料，以及我随后在同一 ChatGPT 对话中上传的同一位成年女性顾客正面照和侧面照，独立分析并给出有依据、可执行的设计建议。",
+"请综合运用：奕含九型风格理论、九季色彩理论、人脸视觉特征与比例、五官曲直和量感、发型剪裁结构、烫发纹理、染发色彩、头发健康风险、顾客需求和发型师现场观察。",
+"不要要求发型师提前判断九型风格或九季色彩。必须先由你根据照片独立分析，再把现场观察作为辅助证据。不要迎合现场判断，也不要把顾客偏好直接当成适合她的结论。",
+"",
+"二、顾客基础资料",
+"- 当前头发长度："+selected("currentLength"),
+"- 原生发质状态："+selected("naturalTexture"),
+historyText(),
+"",
+"三、顾客本次需求",
+"- 需求类型："+needLabel,
+"- 想改变的方向："+(needType.value==="change"?change:"不适用"),
+"- 想解决的现有头发问题："+(needType.value==="problem"?problems:"不适用"),
+"- 如果顾客不确定：请根据照片与已提供资料独立分析，不要虚构顾客偏好。",
+"",
+"四、顾客具体设计要求",
+"- 希望保留／达到的长度："+selected("targetLength"),
+"- 希望的头发纹理："+selected("targetTexture"),
+"- 喜欢的发色深浅："+selected("colorDepth"),
+"- 喜欢的发色色调："+selected("colorTone"),
+"- 希望的染色方式："+selected("colorMethod"),
+"- 日常打理时间："+selected("stylingTime"),
+"- 顾客明确不喜欢的效果："+valList(dislikes),
+"",
+"请尊重以上禁忌。不得把未提供的资料当作事实；不能保证的卷度维持、颜色效果、损伤程度等，必须说明限制和需要现场检查的因素。不要推荐明显违反顾客禁忌的方案。",
+"",
+"五、发型师现场观察（辅助信息，不是最终结论）",
+"- 第一眼整体观感："+selected("firstImpression"),
+"- 声音特征："+selected("voiceQuality"),
+"- 语气／语调节奏："+selected("speechTempo"),
+"- 现场肤色冷暖判断："+selected("skinTone"),
+"- 纯白与米白对比："+selected("whiteTest"),
+"- 金色与银色对比："+selected("metalTest"),
+"请将以上内容视为辅助证据。不要仅凭年龄、声音、第一眼观感或一次色布对比就确定九型风格或九季色彩。",
+"",
+"六、照片分析要求",
+"1. 分别分析正面照和侧面照能够支持的观察，说明光线、角度、表情、遮挡等可能造成的误差。",
+"2. 分析脸部整体轮廓与比例，包括额头、颧骨、下颌、下巴、头部轮廓、视觉重心，以及刘海、长度和层次对比例的影响。",
+"3. 分析五官整体曲直倾向、量感、视觉重心、线条柔和或清晰程度、五官比例与整体协调关系。每个关键结论都要写出可观察的依据。",
+"4. 区分照片可见事实、理论推断和待确认事项。不确定时明确说明，不要把猜测写成事实。",
+"",
+"七、奕含九型风格分析",
+"请依据奕含九型风格体系，对照片中的视觉特征进行独立推理，给出主要候选风格、辅助风格、具体支持证据、相反证据和判断可信程度。结合曲直、量感、整体比例与动静倾向解释判断，不要只给标签。",
+"优先使用当前对话中已经提供的奕含体系资料。如果你无法访问该体系的具体定义，必须明确指出，不要编造九种风格名称、定义或判断规则。",
+"",
+"八、九季色彩分析",
+"综合照片中的肤色表现、现场肤色冷暖判断、纯白与米白测试、金银色测试，以及顾客偏好的发色深浅和色调，解释证据如何相互支持或冲突。",
+"分析九季色彩候选及其依据、可信程度与不确定因素。不能仅凭普通照片或单次对比就武断定季型；如果证据不足，说明需要补充的测试，并给出适合进一步验证的发色方向。",
+"",
+"九、整合需求与技术可行性",
+"结合当前发长、原生发质、烫染历史、目标长度和纹理、发色偏好、打理习惯及明确禁忌，判断需求之间是否冲突、哪些能同时实现、哪些需要取舍。",
+"不要仅凭细软发质就断言不适合烫发，也不要仅凭烫染时间推断头发已受损。指出真正需要现场检查的事项，如发丝弹性、现有卷度残留、发尾状态、头皮耐受情况和实际吹风能力。",
+"",
+"十、提出三套有明显区别的发型方案",
+"方案 A：优先满足顾客本次需求；方案 B：优先降低日常打理成本；方案 C：优先突出个人风格与视觉协调。",
+"每套方案都要写明：方案定位、刘海形态、建议长度与层次、纹理及卷度分布、是否建议烫发及理由、发色方向与明度色调、日常打理方式和维护难度、匹配需求之处、缺点与技术风险、需要发型师现场确认的事项。三套方案必须有实质区别，不要只换名称。",
+"",
+"十一、最终推荐与沟通",
+"选出当前最值得优先考虑的一套，解释推荐依据、能满足的需求、需要妥协的地方和仍不确定的结论。列出真正影响决策的现场复核项目，并提供自然、专业、容易理解的顾客沟通话术，避免生硬术语和夸张营销。",
+"",
+"十二、最高优先级：顾客原脸锁定规则（必须严格执行）",
+"如果你在后续回答中提供发型模拟图、图像生成指令或发型效果图方案，必须以我随后上传的顾客原始照片作为唯一人物基础，保留顾客本人真实样貌。只允许改变头发相关内容：长度、刘海、层次、轮廓、纹理、卷度和发色。",
+"严禁改变或重塑顾客原本的脸型、骨相、五官比例、眼睛、鼻子、嘴唇、眉毛、肤色、皮肤纹理、年龄感、自然不对称、表情及个人辨识特征。禁止磨皮、美颜、瘦脸、大眼、换脸、重塑五官或生成网红脸。不要把顾客变成另一个人。",
+"效果图必须让顾客一眼看出“这是我本人，只是发型变了”。前后对比的重点只能是发型差异，不是脸部变化。如果图像工具无法保证锁脸，应明确说明限制，优先采用保护原脸区域的局部编辑方式，而不是重新生成整张人物照片。",
+"",
+"十三、最终报告格式",
+"请依次输出：1.核心结论摘要；2.正面照与侧面照视觉分析；3.九型风格候选及证据；4.九季色彩分析及不确定因素；5.顾客需求与现实条件分析；6.三套具体发型方案；7.综合推荐及依据；8.现场复核的技术风险；9.发型师与顾客的沟通话术。",
+"最后请明确区分【照片可见事实】【理论推断】【待现场确认】。目标是帮助发型师提高判断质量，而不是给出无法复核的绝对结论。",
+"",
+"提醒：我将在这条提示词之后，在同一 ChatGPT 对话中上传顾客正面照和侧面照。请等照片上传后再开始分析。"
+    ].join("\n");
+  }
+  function updateNeedPanels(){
+    $("changePanel").classList.toggle("hidden",needType.value!=="change");
+    $("problemPanel").classList.toggle("hidden",needType.value!=="problem");
+    $("unsurePanel").classList.toggle("hidden",needType.value!=="unsure");
+  }
+  needType.addEventListener("change",updateNeedPanels);
+  $("generateBtn").addEventListener("click",function(){
+    $("promptOutput").value=prompt();
+    $("status").textContent="已生成完整提示词。请复制后打开 ChatGPT，并在同一对话中上传顾客照片。";
+    $("promptOutput").scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+  $("copyBtn").addEventListener("click",async function(){
+    const output=$("promptOutput");
+    if(!output.value.trim()){output.value=prompt();}
+    try{
+      await navigator.clipboard.writeText(output.value);
+      $("status").textContent="已复制完整提示词，可以粘贴到 ChatGPT。";
+    }catch(e){
+      output.focus();output.select();
+      const ok=document.execCommand("copy");
+      $("status").textContent=ok?"已复制完整提示词，可以粘贴到 ChatGPT。":"请长按提示词文本框，选择“全选”后复制。";
+    }
+  });
+  $("openChatBtn").addEventListener("click",function(){window.open("https://chatgpt.com/","_blank","noopener,noreferrer");});
+  $("resetBtn").addEventListener("click",function(){
+    if(!window.confirm("确定清空本次已选择的资料吗？"))return;
+    document.querySelectorAll("select").forEach(function(el){el.selectedIndex=0;});
+    document.querySelectorAll('input[type="checkbox"]').forEach(function(el){el.checked=false;});
+    document.querySelectorAll("details.group").forEach(function(el){el.open=false;});
+    $("promptOutput").value="";
+    $("status").textContent="";
+    updateNeedPanels();
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
 })();
-</script></body></html>
+</script>
+</body>
+</html>
