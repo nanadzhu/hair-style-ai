@@ -200,39 +200,31 @@ textarea.output{
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · AI 分析提示词生成器</div></div></div><div class="status">V1.3 · 视觉优化版</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · AI 分析提示词生成器</div></div></div><div class="status">V1.6 · 精简采集版</div></header>
 <section class="hero">
 <div class="hero-copy"><div class="eyebrow">STYLIST FIRST · AI SECOND</div><h1>你采集资料，<br><span>AI 独立分析。</span></h1><p>本网页只负责点选顾客资料并生成完整提示词。顾客照片只需在 ChatGPT 对话中上传，不必在这里重复上传。</p></div>
 <aside class="hero-note"><strong>少一步操作，少一份重复</strong><p>按选项填写 → 生成完整提示词 → 一键复制并打开 ChatGPT → 在同一条对话中附上顾客照片并发送。九型风格、九季色彩由 AI 根据照片与资料分析。</p></aside>
 </section>
-<nav class="flow" aria-label="使用步骤"><span class="pill"><b>01</b>基础资料</span><span class="pill"><b>02</b>本次需求</span><span class="pill"><b>03</b>设计要求</span><span class="pill"><b>04</b>现场观察</span><span class="pill"><b>05</b>复制提示词并上传照片</span></nav>
+<nav class="flow" aria-label="使用步骤"><span class="pill"><b>01</b>选顾客想要的效果</span><span class="pill"><b>02</b>必要时补充烫染史</span><span class="pill"><b>03</b>复制提示词并附照片</span></nav>
 
 <section class="panel">
-<div class="panel-head"><div class="num">01</div><div><h2>顾客基础资料</h2><p class="sub">全部使用选项，不需要手动打字。未确认的信息可以选择“不清楚 / 暂时无法判断”。</p></div></div>
+<div class="panel-head"><div class="num">01</div><div><h2>必要资料</h2><p class="sub">只填会影响发型效果的内容；五官、九型风格和九季色彩由 AI 看照片分析。</p></div></div>
 <div class="grid-two">
 <div class="field"><label class="field-title" for="currentLength">当前头发长度</label><select class="select" id="currentLength"><option value="">请选择</option><option>极短发</option><option>超短发</option><option>齐耳</option><option>齐下巴</option><option>齐肩</option><option>锁骨</option><option>胸上</option><option>胸下</option><option>超长发（腰部及以下）</option><option>其他 / 暂时无法判断</option></select></div>
-<div class="field"><label class="field-title" for="nativeTexture">原生发质状态</label><select class="select" id="nativeTexture"><option value="">请选择</option><option>正常</option><option>细软</option><option>正常偏细软</option><option>粗硬</option><option>沙性发质（沙发）</option><option>自然卷</option><option>暂时无法判断</option></select></div>
+
 </div>
-<div class="field"><span class="field-title">烫染过往史</span><p class="hint">分别记录历史处理，不与当前发质状态混在一起。</p>
-<div class="grid-two">
+<details class="optional-history"><summary>烫染过往史（选填，涉及烫染时再展开）</summary><p class="hint">只用于判断技术可行性；不确定可选“不清楚”。</p><div class="grid-two">
 <div class="field"><label class="field-title" for="straightHistory">做过拉直 / 离子烫吗？</label><select class="select history" id="straightHistory"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
 <div class="field"><label class="field-title" for="proteinHistory">做过蛋白矫正 / 酸性顺直吗？</label><select class="select history" id="proteinHistory"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
 <div class="field"><label class="field-title" for="permHistory">烫过卷发吗？</label><select class="select history" id="permHistory"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
 <div class="field"><label class="field-title" for="dyeHistory">染过头发吗？</label><select class="select history" id="dyeHistory"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
 <div class="field"><label class="field-title" for="bleachHistory">漂过头发吗？</label><select class="select history" id="bleachHistory"><option value="">请选择</option><option>是</option><option>否</option><option>不清楚</option></select></div>
 <div class="field"><label class="field-title" for="lastProcess">最近一次烫染的大致时间</label><select class="select history" id="lastProcess"><option value="">请选择</option><option>从未烫染</option><option>1个月内</option><option>1—3个月</option><option>3—6个月</option><option>6—12个月</option><option>1年以上</option><option>不清楚</option></select></div>
-</div></div>
+</div></details>
 </section>
 
 <section class="panel">
-<div class="panel-head"><div class="num">02</div><div><h2>顾客这次想解决什么？</h2><p class="sub">按你确定的顺序：想改变发型 → 想解决现有头发问题 → 不确定。</p></div></div>
-<div class="field"><label class="field-title" for="needType">本次需求类型</label><select class="select" id="needType"><option value="">请选择</option><option value="change">想改变发型（通常有自己的想法或参考图）</option><option value="problem">想解决现有头发问题</option><option value="unsure">不确定，希望发型师综合设计</option></select></div>
-<div class="conditional" id="changeBox"><div class="field"><label class="field-title" for="changeDirection">主要改变方向</label><select class="select" id="changeDirection"><option value="">请选择</option><option>改变刘海</option><option>改变整体长度</option><option>调整层次与轮廓</option><option>改变卷度 / 纹理</option><option>调整头顶蓬松度与头型</option><option>改变整体风格</option><option>改变发色</option><option>多方面综合改变</option><option>暂时说不清</option></select></div></div>
-<div class="conditional" id="problemBox"><div class="field"><label class="field-title" for="mainProblem">目前最想解决的头发问题</label><select class="select" id="mainProblem"><option value="">请选择</option><option>头顶扁塌、缺少蓬松度</option><option>发量显少、发型缺少支撑</option><option>脸部轮廓需要修饰</option><option>头型轮廓需要修饰</option><option>现有层次或长度不协调</option><option>卷度不理想或缺少纹理</option><option>头发毛躁、炸毛、不顺</option><option>发色不满意或显肤色暗沉</option><option>白发 / 新生发根需要处理</option><option>发尾干燥、打结</option><option>其他问题 / 暂时无法归类</option></select></div></div>
-</section>
-
-<section class="panel">
-<div class="panel-head"><div class="num">03</div><div><h2>具体设计要求</h2><p class="sub">把顾客想要的效果和维护限制记录清楚，不把偏好直接当成最终设计结论。</p></div></div>
+<div class="panel-head"><div class="num">03</div><div><h2>具体设计要求</h2><p class="sub">只填最终图片必须遵守的长度、纹理、发色和打理要求。</p></div></div>
 <div class="grid-two">
 <div class="field"><label class="field-title" for="targetLength">希望保留的长度</label><select class="select" id="targetLength"><option value="">请选择</option><option>尽量保留现有长度</option><option>极短发</option><option>超短发</option><option>齐耳</option><option>齐下巴</option><option>齐肩</option><option>锁骨</option><option>胸上</option><option>胸下</option><option>超长发（腰部及以下）</option><option>暂时无法判断</option></select></div>
 <div class="field"><label class="field-title" for="textureGoal">希望的头发纹理</label><select class="select" id="textureGoal"><option value="">请选择</option><option>直发</option><option>自然纹理</option><option>自然大弯</option><option>波浪卷</option><option>法式卷</option><option>羊毛卷</option><option>暂时无法判断</option></select></div>
@@ -241,7 +233,7 @@ textarea.output{
 <div class="field"><label class="field-title" for="dyeMethod">希望的染色方式</label><select class="select" id="dyeMethod"><option value="">请选择</option><option>普通整体染发</option><option>设计染（挑染、渐变、光染等）</option><option>不考虑染发</option><option>暂时无法判断</option></select></div>
 <div class="field"><label class="field-title" for="careTime">每天愿意花多少时间打理？</label><select class="select" id="careTime"><option value="">请选择</option><option>几乎不打理，洗吹即可</option><option>每天约5分钟</option><option>每天约10—15分钟</option><option>愿意认真吹风并使用造型品</option><option>暂时无法判断</option></select></div>
 </div>
-<div class="field"><span class="field-title">顾客明确不喜欢什么（可多选）</span><p class="hint">按顾客真实顾虑勾选；未勾选不代表顾客一定接受。</p>
+<div class="field"><span class="field-title">顾客明确不接受的效果（按需勾选）</span><p class="hint">按顾客真实顾虑勾选；未勾选不代表顾客一定接受。</p>
 <details><summary>烫发效果与日常打理</summary><div class="check-group">
 <label><input type="checkbox" name="dislike" value="小卷显老气">小卷显老气</label>
 <label><input type="checkbox" name="dislike" value="过于夸张、不适合职场">过于夸张、不适合职场</label>
@@ -268,17 +260,7 @@ textarea.output{
 </div>
 </section>
 
-<section class="panel">
-<div class="panel-head"><div class="num">04</div><div><h2>现场观察</h2><p class="sub">这些是辅助线索，不替代 AI 对顾客照片的独立分析。</p></div></div>
-<div class="grid-two">
-<div class="field"><label class="field-title" for="firstImpression">第一眼整体观感</label><select class="select" id="firstImpression"><option value="">未记录</option><option>柔和亲切</option><option>自然随性</option><option>利落</option><option>有距离感</option><option>多种感觉并存</option></select></div>
-<div class="field"><label class="field-title" for="voiceQuality">听觉特征：声音</label><select class="select" id="voiceQuality"><option value="">未记录</option><option>轻柔</option><option>响亮</option><option>沙哑</option><option>平常</option></select></div>
-<div class="field"><label class="field-title" for="speechTempo">听觉特征：语气 / 语调节奏</label><select class="select" id="speechTempo"><option value="">未记录</option><option>快</option><option>慢</option><option>平常</option></select></div>
-<div class="field"><label class="field-title" for="skinUndertone">现场观察的肤色冷暖</label><select class="select" id="skinUndertone"><option value="">未记录</option><option>偏冷调</option><option>偏暖调</option><option>中性调</option><option>暂时无法判断</option></select></div>
-<div class="field"><label class="field-title" for="whiteTest">纯白与米白对比</label><select class="select" id="whiteTest"><option value="">未测试</option><option>纯白更协调</option><option>米白更协调</option><option>差异不明显</option><option>暂时无法判断</option></select></div>
-<div class="field"><label class="field-title" for="metalTest">金色与银色对比</label><select class="select" id="metalTest"><option value="">未测试</option><option>金色更协调</option><option>银色更协调</option><option>差异不明显</option><option>暂时无法判断</option></select></div>
-</div>
-</section>
+
 
 <section class="panel">
 <div class="panel-head"><div class="num">05</div><div><h2>生成完整 AI 设计提示词</h2><p class="sub">自动整合所有资料、理论分析要求、发型方案要求和锁脸规则。你只需复制一次。</p></div></div>
@@ -286,7 +268,7 @@ textarea.output{
 <div id="result" class="result"><div class="field"><label class="field-title" for="promptOutput">生成后的完整提示词</label><textarea id="promptOutput" class="output" readonly></textarea><p class="notice" id="status">下一步：复制整段提示词，在 ChatGPT 中附上顾客正面照和侧面照（如有），然后一起发送。照片不需要上传到本网页。</p></div></div>
 <div class="inline-note">工作分工：本网页只采集资料、生成提示词；ChatGPT 根据你在对话中上传的顾客照片和提示词进行分析。九型风格与九季色彩由 AI 独立判断，不要求发型师预先判型。</div>
 </section>
-<div class="footer">朱老师发型研究室 · 专业发型师工作流 · V1.5</div>
+<div class="footer">朱老师发型研究室 · 专业发型师工作流 · V1.6</div>
 </main>
 <script>
 (function(){
@@ -300,79 +282,36 @@ $("problemBox").classList.toggle("visible",need.value==="problem");
 });
 function buildPrompt(){
 const dislikes=checked("dislike");
-const dislikeText=dislikes.length?dislikes.join("；"):"未勾选（不能推断顾客接受所有效果）";
+const dislikeText=dislikes.length?dislikes.join("；"):"未特别说明";
+const optionalHistory=[
+["拉直/离子烫",value("straightHistory")],
+["蛋白矫正/酸性顺直",value("proteinHistory")],
+["烫过卷发",value("permHistory")],
+["染过头发",value("dyeHistory")],
+["漂过头发",value("bleachHistory")],
+["最近一次烫染时间",value("lastProcess")]
+].filter(x=>x[1]).map(x=>x[0]+"："+x[1]).join("；")||"未提供";
 const lines=[
-"你是“朱老师发型设计助手”的专业女士发型设计分析 AI。请根据我在本次 ChatGPT 对话中附上的同一位成年女性顾客照片（正面照、侧面照如有）以及以下现场采集资料，独立分析并给出可执行的发型设计建议。",
-"",
-"【最高优先级：照片人物锁脸，只改变头发】",
-"我上传的顾客照片是人物身份与脸部的唯一依据。推荐发型或生成发型效果图时，必须尽可能保留顾客原本的样子，只修改头发相关内容：发型长度、刘海、层次、轮廓、纹理、卷度、卷度分布与发色。",
-"严禁主动改变顾客原本的脸型、骨相、五官比例、眼睛、鼻子、嘴唇、眉毛、自然不对称、肤色、皮肤纹理、年龄感、表情及个人辨识特征；禁止磨皮、美颜、瘦脸、大眼、重塑五官、换脸或生成网红脸。不要为了让发型效果更漂亮而重塑脸部。",
-"效果图必须让顾客清楚看出“这是我本人，只是发型变了”。如工具支持局部蒙版或图层保护，应保护原始脸部区域。若无法完全锁定脸部，应明确说明限制，不要声称已做到像素级不变。",
-"",
-"【工作分工与判断原则】",
-"网页仅负责采集资料和生成提示词；你负责根据实际上传的照片进行视觉分析。不要要求发型师预先选择九型风格或九季色彩。不要假装看过未上传的照片；若当前对话还没有照片，先提醒我上传照片，再开始分析。",
-"区分照片可见事实、理论推断、发型师现场观察和待确认信息。不要将顾客偏好直接当作专业结论；不要仅凭年龄、声音、第一眼印象或单张照片就武断确定风格或季型。信息不足时明确说明，不要编造证据或准确率。",
-"禁止插入图库照片、网图、示意模特图或任何非本顾客的图片。完成文字分析和三套方案后，必须尝试为三套方案分别生成一张顾客本人发型效果图：每张都以本次上传的顾客原图为底图进行图像编辑，只改变头发，三张分别对应方案A、方案B、方案C。不得重新生成整个人物，不得用其他模特代替顾客。若图像工具无法可靠保留原脸，必须明确说明限制，不得用换脸或图库图片凑数。",
-"【资料冲突核对规则】先比较表单资料与照片可见信息。若长度、发型状态或其他项目明显不一致，必须单独列出冲突、说明照片能确认什么/不能确认什么，并将相关方案标注为条件性建议；不得自行猜测哪项正确，也不得把看不见的后脑、发旋、发质触感或头皮状态写成已确认事实。即使存在冲突，也应继续给出可用的初步分析，并指出最少需要现场确认的事项，不要无故停止全部分析。",
-"",
-"【顾客基础资料】",
-"当前头发长度："+value("currentLength"),
-"原生发质状态："+value("nativeTexture"),
-"做过拉直/离子烫："+value("straightHistory"),
-"做过蛋白矫正/酸性顺直："+value("proteinHistory"),
-"是否烫过卷发："+value("permHistory"),
-"是否染过头发："+value("dyeHistory"),
-"是否漂过头发："+value("bleachHistory"),
-"最近一次烫染的大致时间："+value("lastProcess"),
-"",
-"【顾客本次需求】",
-"本次需求类型："+(need.value==="change"?"想改变发型":need.value==="problem"?"想解决现有头发问题":need.value==="unsure"?"不确定，希望发型师综合设计":"未提供"),
-"主要改变方向："+(need.value==="change"?value("changeDirection"):"不适用"),
-"主要头发问题："+(need.value==="problem"?value("mainProblem"):"不适用"),
-"",
-"【顾客具体设计要求】",
-"希望保留的长度："+value("targetLength"),
-"希望的头发纹理："+value("textureGoal"),
-"希望的发色深浅："+value("colorDepth"),
-"希望的发色色调："+value("colorTone"),
-"希望的染色方式："+value("dyeMethod"),
-"每天愿意花多少时间打理："+value("careTime"),
-"顾客明确不喜欢的效果："+dislikeText,
-"",
-"【发型师现场观察：只作为辅助证据】",
-"第一眼整体观感："+value("firstImpression"),
-"声音特征："+value("voiceQuality"),
-"语气/语调节奏："+value("speechTempo"),
-"现场观察的肤色冷暖："+value("skinUndertone"),
-"纯白与米白对比："+value("whiteTest"),
-"金色与银色对比："+value("metalTest"),
-"",
-"【第一阶段：照片独立视觉分析】",
-"分别分析正面照和侧面照能够支持的判断，并说明角度、光线、表情、遮挡造成的误差。观察脸部整体比例、额头、颧骨、下颌、下巴、侧面轮廓、头部视觉重心、五官曲直倾向、量感及线条清晰度。每个重要判断都要写出具体照片依据；照片看不到的真实发质触感、发根方向或后脑轮廓，不要臆测。",
-"",
-"【第二阶段：奕含九型风格综合推理】",
-"严格使用以下九型基础映射，不要换用其他流派的九型定义：曲直三类×量感三类。小量感直线＝少年型；中量感直线＝睿智型；大量感直线＝戏剧型；小量感曲线＝少女型；中量感曲线＝优雅型；大量感曲线＝浪漫型；小量感中间曲直＝灵动型；中量感中间曲直＝自然型；大量感中间曲直＝华贵型。九型是基础骨架，再叠加动静属性；动静用于细化表达，不可代替曲直与量感的基础判断。",
-"判型顺序：①逐项描述照片中支持直线、曲线或中间曲直的可见证据；②估计整体视觉量感为小、中或大，并说明依据；③将曲直与量感组合成主要候选及最多两个辅助候选；④再结合整体视觉节奏与现场观察辅助判断动静。每个候选都要列支持证据、反证、置信等级（高/中/低，非伪精确百分比）及需要确认的信息。不得把脸型名称直接等同于风格类型，也不得仅凭声音、性格猜测或第一眼印象定型。若照片角度、妆容、发型遮挡或拍摄距离影响判断，应降低置信等级。",
-"",
-"【第三阶段：奕含九季色彩综合分析】",
-"严格使用九宫体系，核心坐标只有两个：横轴色相基调（暖/中性/冷），纵轴明度（浅/中/深）；纯度或灰度只能作为辅助描述，不得把它作为第一判型轴。九季对应关系固定为：浅暖＝春，浅中性＝春夏，浅冷＝夏；中暖＝春秋，中中性＝柔和，中冷＝夏冬；深暖＝秋，深中性＝秋冬，深冷＝冬。",
-"判定顺序：①结合现场色布/金银对比与照片提出冷暖候选；②评估顾客能否承载浅、中、深哪档明度，并明确普通照片不能可靠单独定明度；③按九宫交叉得到候选季型；④把顾客偏好的发色仅作为需求约束，不当作季型证据。必须写出支持证据、相反证据、光线/白平衡/妆容/曝光造成的误差、候选排序及置信等级（高/中/低）。若证据不足，给出最少且具体的复核方法，不要强行定型。不得把“金银都适合”自动等同于柔和型，也不得仅凭一张照片宣称已准确确定季型。",
-"",
-"【第四阶段：结合需求与实际条件设计发型】",
-"综合当前长度、原生发质、烫染历史、顾客目标、打理时间及所有明确禁忌。先判断需求之间是否存在冲突，再提出2—3套有明显区别的方案。优先满足顾客表达的改变方向，同时评估长度、纹理、烫发与染发的可行性。不要默认顾客想要卷发就一定要烫发；不要仅凭细软发质或烫染历史直接断言适合/不适合处理。需要现场检查的化学处理风险必须明确标注。",
-"每套方案须包含：设计定位；刘海形态；建议长度与层次结构；纹理、卷度大小和分布；是否建议烫发及原因；发色方向与染色方式；日常打理难度；与顾客需求的匹配点；缺点、风险和现场复核事项。不得推荐明显违反顾客禁忌的方案。每套方案必须能落实到剪发结构与日常操作，避免只用“显年轻、自然、时尚、显脸小”等空泛形容词。明确区分无需烫发、局部烫发和整体烫发的条件；对染发需考虑现有底色、发根分界、漂发禁忌、头皮敏感及发质风险，不承诺卷度维持时间、染后不褪色或绝对不过敏。",
-"",
-"【输出内容控制】",
-"只输出以下四部分，不要添加执行摘要、冲突核对、长篇理由、现场检查清单、风险专章或顾客沟通话术。",
-"1. 五官与整体形体分析：用3—5句简洁说明可见的脸部比例、五官曲直和整体量感；没有侧面照就不要假装分析侧面。",
-"2. 九型风格：直接给出一个最符合的风格名称；若证据不足，只能简短写“暂定××型”。不要列候选排行榜、置信等级或长篇推理。必须仍按指定的奕含九型映射判断。",
-"3. 九季色彩：直接给出一个最符合的九季名称；若证据不足，简短注明“暂定××季”。必须按指定九宫坐标判断，不要写长篇色彩理论。",
-"4. 三套发型方案及效果图：每套方案写清长度、刘海、剪发层次、纹理/卷度、是否烫发、发色方向和日常打理，控制在5—7条短句。每套方案都必须配一张基于本次顾客原图编辑的效果图，分别展示方案A、B、C。禁止输出通用模特图或网图。三张图必须是同一位顾客，脸部身份和五官保持不变，只改变头发；若不能可靠锁脸，明确说明无法保证，不要伪造结果。",
-"",
-"【最终输出顺序】",
-"【输出格式总规则】只输出以下四部分：1. 五官与整体形体分析；2. 九型风格名称；3. 九季色彩名称；4. 三套具体发型方案，每套配一张基于本次顾客原图编辑的效果图。禁止额外添加核心结论摘要、资料冲突核对、候选排行榜、长篇理论、现场检查专章或沟通话术。",
-"",
-"请始终区分事实、推断与待确认事项。不要为了给出肯定答案而编造依据。发型效果模拟时，最高优先级仍是保留顾客原本的脸，只改变头发。"
+"你是“朱老师发型设计助手”。请根据本次对话中实际上传的顾客照片和下面的简短需求，直接完成女士发型分析与设计。",
+"【锁脸规则】顾客原图是唯一人物底图。只允许修改头发长度、刘海、层次、轮廓、蓬松度、纹理、卷度和发色；必须尽可能保留原脸、五官、肤质、表情、年龄感和自然不对称。禁止换脸、美颜、磨皮、重塑五官或重新生成整个人物。不得用网图或其他模特替代顾客。",
+"【分析规则】请 AI 根据实际照片独立判断五官与整体形体、奕含九型风格、奕含九季色彩，不要求发型师预先判型。九型严格使用本项目指定的“曲直×量感”九型映射；九季严格使用本项目指定的“暖/中性/冷×浅/中/深”九宫映射。证据不足时简短标注“暂定”，不要编造。",
+"【顾客想要的效果】",
+"当前发长："+(value("currentLength")||"请根据照片判断"),
+"目标发长："+(value("targetLength")||"未指定，请结合照片推荐"),
+"目标纹理："+(value("textureGoal")||"未指定，请结合风格推荐"),
+"发色深浅："+(value("colorDepth")||"未指定"),
+"发色色调："+(value("colorTone")||"未指定"),
+"染色方式："+(value("dyeMethod")||"未指定"),
+"日常打理："+(value("careTime")||"未指定"),
+"明确不接受："+dislikeText,
+"烫染过往史（辅助判断可行性，不替代现场检查）："+optionalHistory,
+"【只输出以下内容】",
+"1. 五官与整体形体分析：简洁说明关键特征。",
+"2. 九型风格：直接给出一个主要风格名称。",
+"3. 九季色彩：直接给出一个主要季型名称。",
+"4. 三套具体发型方案：每套简洁写明长度、刘海、剪发层次、纹理/卷度、是否建议烫发、发色方向和打理难度。",
+"【效果图要求】我需要的是这位顾客本人换发型后的效果图，不是发型参考图。请为三套方案分别尝试生成一张图，每张都以本次上传的顾客原图为底图进行局部图像编辑，只改头发，三张都必须是同一个人。脸部明显变化、换脸、磨皮或换成其他模特均判定不合格。若当前工具无法可靠保留原脸，请明确说明，不能用其他图片凑数。",
+"不要额外输出资料冲突专章、候选排行榜、长篇理论、现场检查专章或沟通话术。"
 ];
 return lines.join("\n");
 }
