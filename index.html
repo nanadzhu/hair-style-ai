@@ -3,25 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f6f2eb">
+<meta name="theme-color" content="#f3f1e9">
 <title>朱老师发型设计助手 · 提示词生成器</title>
 <style>
-:root{--bg:#f6f2eb;--paper:#fffdf9;--ink:#292722;--muted:#777168;--line:#e7dfd3;--accent:#9b604d;--accent2:#ead8c8;--shadow:0 12px 34px rgba(52,42,31,.06)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-button,select,input{font:inherit}button{cursor:pointer}.wrap{max-width:980px;margin:auto;padding:20px 16px 56px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0 24px}.brand{display:flex;align-items:center;gap:12px;font-weight:750}.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:14px 14px 14px 4px;background:var(--ink);color:#fff;font-size:20px}.status{font-size:12px;border:1px solid var(--line);background:#fffaf3;border-radius:999px;padding:7px 11px;color:var(--muted)}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:18px}.hero-copy,.hero-note{border-radius:22px;padding:24px;background:var(--paper);border:1px solid var(--line)}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--accent);font-weight:800}.hero h1{font-size:clamp(28px,4vw,42px);line-height:1.2;letter-spacing:-.035em;margin:9px 0 12px}.hero h1 span{color:var(--accent)}.hero p{color:var(--muted);margin:0}.hero-note{background:#eee4d8;display:flex;flex-direction:column;justify-content:center}.hero-note strong{font-size:18px;margin-bottom:7px}.hero-note p{font-size:14px}
-.flow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.pill{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:#fffaf5;color:var(--muted);font-size:13px}.pill b{color:var(--accent);margin-right:4px}
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:21px;margin-bottom:15px;box-shadow:var(--shadow)}.panel-head{display:flex;gap:11px;align-items:flex-start;margin-bottom:14px}.num{flex:0 0 33px;height:33px;border-radius:10px;background:var(--accent2);color:#69483a;display:grid;place-items:center;font-weight:800}.panel h2{font-size:19px;line-height:1.35;margin:1px 0 4px}.sub{font-size:13px;color:var(--muted);margin:0}.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-top:15px;min-width:0}.field-title{font-weight:750;font-size:14px;margin-bottom:7px;display:block}.select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fff;color:var(--ink);min-height:46px}.hint{font-size:12px;color:var(--muted);margin-top:6px}.conditional{display:none;border-left:3px solid var(--accent2);padding-left:13px;margin-top:10px}.conditional.visible{display:block}
-.check-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.check-group label{display:flex;align-items:flex-start;gap:7px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;font-size:13px;line-height:1.45}.check-group input{margin-top:4px;accent-color:var(--accent);flex:0 0 auto}
-details{border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-top:12px;background:#faf7f2}summary{cursor:pointer;font-weight:750}details .field:first-of-type{margin-top:10px}
-.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.btn{border:0;border-radius:12px;padding:12px 16px;min-height:45px;background:var(--accent);color:white;font-weight:750}.btn.secondary{background:#eee6dc;color:var(--ink)}.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}.btn:disabled{opacity:.45;cursor:not-allowed}.result{display:none}.result.visible{display:block}textarea.output{width:100%;min-height:420px;line-height:1.65;border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;color:var(--ink);resize:vertical}.notice{font-size:13px;color:#705448;margin-top:9px}.inline-note{background:#f4e9dd;border-radius:12px;padding:12px 14px;font-size:13px;color:#705448;margin-top:15px}.footer{text-align:center;font-size:12px;color:#91887e;margin-top:24px}
-@media(max-width:680px){.wrap{padding:12px 11px 36px}header{padding-bottom:16px}.hero{grid-template-columns:1fr;gap:10px}.hero-copy,.hero-note{padding:19px}.panel{padding:16px}.grid-two{grid-template-columns:1fr}.check-group{grid-template-columns:1fr}.status{max-width:120px;text-align:center}.btn{flex:1 1 auto}}
+:root{
+  --bg:#f3f1e9;
+  --paper:#fffdf8;
+  --ink:#302f29;
+  --muted:#77776b;
+  --line:#e3e0d4;
+  --accent:#68745d;
+  --accent-deep:#4e5c45;
+  --accent2:#e8eadf;
+  --wood:#ad8d6b;
+  --shadow:0 10px 32px rgba(54,55,42,.055);
+  --shadow-hover:0 14px 36px rgba(54,55,42,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(207,211,190,.22),transparent 30rem),
+    var(--bg);
+  color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+button,select,input,textarea{font:inherit}
+button{cursor:pointer}
+button,select,summary{-webkit-tap-highlight-color:transparent}
+.wrap{max-width:1000px;margin:auto;padding:22px 20px 60px}
+header{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:5px 2px 22px;
+}
+.brand{display:flex;align-items:center;gap:13px;font-weight:780;letter-spacing:.01em}
+.logo{
+  width:46px;height:46px;display:grid;place-items:center;
+  border-radius:16px 16px 16px 5px;background:var(--accent-deep);color:#fff;
+  font-size:21px;box-shadow:0 5px 13px rgba(78,92,69,.17);
+}
+.status{
+  font-size:12px;border:1px solid #d8dccd;background:rgba(255,253,248,.8);
+  border-radius:999px;padding:7px 12px;color:var(--accent-deep);white-space:nowrap;
+}
+.sub{font-size:13px;color:var(--muted);margin:0;font-weight:400;letter-spacing:0}
+.hero{
+  display:grid;grid-template-columns:1.12fr .88fr;gap:14px;margin-bottom:18px;
+}
+.hero-copy,.hero-note{
+  position:relative;overflow:hidden;border-radius:25px;padding:27px;
+  background:var(--paper);border:1px solid rgba(221,220,207,.9);
+  box-shadow:var(--shadow);
+}
+.hero-copy:after{
+  content:"";position:absolute;width:180px;height:180px;border-radius:50%;
+  right:-72px;bottom:-105px;border:1px solid rgba(104,116,93,.15);
+  box-shadow:0 0 0 18px rgba(104,116,93,.035),0 0 0 38px rgba(104,116,93,.025);
+  pointer-events:none;
+}
+.eyebrow{font-size:11px;letter-spacing:.17em;color:var(--accent);font-weight:850}
+.hero h1{
+  font-size:clamp(30px,4vw,43px);line-height:1.2;letter-spacing:-.045em;
+  margin:11px 0 13px;font-weight:800;
+}
+.hero h1 span{color:var(--accent-deep)}
+.hero p{color:var(--muted);margin:0;font-size:14px;max-width:38em}
+.hero-note{
+  background:linear-gradient(145deg,#e9ebdf 0%,#f0eee3 100%);
+  display:flex;flex-direction:column;justify-content:center;border-color:#dfe2d4;
+}
+.hero-note:before{
+  content:"";position:absolute;right:-22px;top:-45px;width:135px;height:135px;
+  border:1px solid rgba(104,116,93,.19);border-radius:62% 38% 58% 42%;
+  transform:rotate(28deg);pointer-events:none;
+}
+.hero-note strong{font-size:18px;margin-bottom:8px;letter-spacing:.01em}
+.hero-note p{font-size:14px;color:#686e5c;max-width:34em}
+.flow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 19px}
+.pill{
+  white-space:nowrap;border:1px solid #e2dfd3;border-radius:999px;
+  padding:7px 12px;background:rgba(255,253,248,.78);color:var(--muted);font-size:12px;
+}
+.pill b{color:var(--accent-deep);margin-right:5px;font-weight:800}
+.panel{
+  background:var(--paper);border:1px solid var(--line);border-radius:21px;
+  padding:23px;margin-bottom:16px;box-shadow:var(--shadow);
+  transition:box-shadow .18s ease,border-color .18s ease;
+}
+.panel:hover{border-color:#d8dacd;box-shadow:var(--shadow-hover)}
+.panel-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:15px}
+.num{
+  flex:0 0 36px;height:36px;border-radius:12px 12px 12px 4px;
+  background:var(--accent2);color:var(--accent-deep);display:grid;place-items:center;
+  font-size:13px;font-weight:850;border:1px solid #dfe3d5;
+}
+.panel h2{font-size:19px;line-height:1.35;margin:2px 0 5px;letter-spacing:-.02em}
+.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:11px 14px}
+.field{margin-top:15px;min-width:0}
+.field-title{font-weight:750;font-size:14px;margin-bottom:7px;display:block;color:#45463d}
+.select{
+  appearance:auto;width:100%;border:1px solid #deded2;border-radius:13px;
+  padding:12px 13px;background:#fffefa;color:var(--ink);min-height:48px;
+  box-shadow:inset 0 1px 1px rgba(40,40,30,.015);
+  transition:border-color .15s ease,box-shadow .15s ease,background .15s ease;
+}
+.select:hover{border-color:#bfc7b2;background:#fff}
+.select:focus-visible,textarea.output:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:3px solid rgba(104,116,93,.23);outline-offset:2px;border-color:var(--accent);
+}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+.conditional{display:none;border-left:3px solid #c8d0bc;padding:2px 0 4px 14px;margin-top:12px}
+.conditional.visible{display:block;animation:appear .18s ease-out}
+@keyframes appear{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.check-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.check-group label{
+  display:flex;align-items:flex-start;gap:9px;border:1px solid #e5e3d9;
+  background:#fffefa;border-radius:12px;padding:10px 11px;font-size:13px;line-height:1.5;
+  transition:background .15s ease,border-color .15s ease;
+}
+.check-group label:has(input:checked){background:#f0f2e9;border-color:#b9c3ad;color:#414b39}
+.check-group input{margin-top:4px;accent-color:var(--accent-deep);flex:0 0 auto;width:15px;height:15px}
+details{
+  border:1px solid #e3e1d7;border-radius:14px;padding:12px 14px;margin-top:11px;
+  background:#faf9f3;transition:border-color .15s ease,background .15s ease;
+}
+details[open]{background:#fbfaf5;border-color:#d4d9c9}
+summary{
+  cursor:pointer;font-weight:750;font-size:14px;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+summary::-webkit-details-marker{display:none}
+summary:after{
+  content:"＋";width:25px;height:25px;display:grid;place-items:center;flex:none;
+  border-radius:50%;background:#e9ebdf;color:var(--accent-deep);font-size:15px;font-weight:500;
+}
+details[open] summary:after{content:"−"}
+details .field:first-of-type{margin-top:10px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}
+.btn{
+  border:1px solid transparent;border-radius:13px;padding:12px 17px;min-height:47px;
+  background:var(--accent-deep);color:white;font-weight:750;font-size:14px;
+  box-shadow:0 4px 10px rgba(78,92,69,.12);
+  transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+}
+.btn:hover{background:#414e39;box-shadow:0 7px 16px rgba(78,92,69,.18);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.secondary{background:#e8eade;color:#414b39;border-color:#dce0d2;box-shadow:none}
+.btn.secondary:hover{background:#dfe4d5}
+.btn.ghost{background:transparent;color:#64675a;border-color:#dcded2;box-shadow:none}
+.btn.ghost:hover{background:#f1f1e9;border-color:#c8cebc}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+.result{display:none}
+.result.visible{display:block;animation:appear .2s ease-out}
+textarea.output{
+  width:100%;min-height:420px;line-height:1.7;border:1px solid #deded2;
+  border-radius:14px;padding:15px;background:#fffefa;color:var(--ink);resize:vertical;
+  font-size:13px;box-shadow:inset 0 2px 4px rgba(40,40,30,.025);
+}
+.notice{font-size:13px;color:#59664f;background:#f0f2e9;border:1px solid #dfe4d6;border-radius:12px;padding:11px 13px;margin-top:10px}
+.inline-note{background:#f1efe5;border:1px solid #e5e1d4;border-radius:13px;padding:13px 15px;font-size:13px;color:#706f62;margin-top:17px}
+.footer{text-align:center;font-size:12px;color:#898a7d;margin-top:27px;letter-spacing:.02em}
+@media(max-width:680px){
+  .wrap{padding:12px 12px 38px}
+  header{padding:3px 1px 17px;align-items:flex-start}
+  .brand{gap:10px;font-size:14px}
+  .logo{width:42px;height:42px;flex:none}
+  .status{font-size:11px;padding:6px 9px;max-width:110px;text-align:center}
+  .hero{grid-template-columns:1fr;gap:10px}
+  .hero-copy,.hero-note{padding:20px;border-radius:20px}
+  .hero h1{font-size:32px}
+  .hero-note strong{font-size:16px}
+  .flow{gap:6px;margin-bottom:14px}
+  .pill{padding:6px 9px;font-size:11px}
+  .panel{padding:17px 15px;border-radius:18px;margin-bottom:12px}
+  .panel-head{gap:10px;margin-bottom:12px}
+  .num{flex-basis:33px;height:33px}
+  .panel h2{font-size:17px}
+  .grid-two{grid-template-columns:1fr;gap:2px}
+  .field{margin-top:13px}
+  .field-title{font-size:14px}
+  .select{min-height:49px;padding:12px;border-radius:12px;font-size:15px}
+  .check-group{grid-template-columns:1fr;gap:7px}
+  .check-group label{padding:11px 12px}
+  details{padding:12px;border-radius:12px}
+  .actions{gap:8px}
+  .btn{flex:1 1 calc(50% - 8px);padding:12px 10px;min-height:48px}
+  #generate{flex-basis:100%}
+  textarea.output{min-height:360px;font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
 </style>
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · AI 分析提示词生成器</div></div></div><div class="status">V1.2 · 资料采集版</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · AI 分析提示词生成器</div></div></div><div class="status">V1.3 · 视觉优化版</div></header>
 <section class="hero">
 <div class="hero-copy"><div class="eyebrow">STYLIST FIRST · AI SECOND</div><h1>你采集资料，<br><span>AI 独立分析。</span></h1><p>本网页只负责点选顾客资料并生成完整提示词。顾客照片只需在 ChatGPT 对话中上传，不必在这里重复上传。</p></div>
 <aside class="hero-note"><strong>少一步操作，少一份重复</strong><p>按选项填写 → 生成完整提示词 → 一键复制并打开 ChatGPT → 在同一条对话中附上顾客照片并发送。九型风格、九季色彩由 AI 根据照片与资料分析。</p></aside>
@@ -107,7 +286,7 @@ details{border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin
 <div id="result" class="result"><div class="field"><label class="field-title" for="promptOutput">生成后的完整提示词</label><textarea id="promptOutput" class="output" readonly></textarea><p class="notice" id="status">下一步：复制整段提示词，在 ChatGPT 中附上顾客正面照和侧面照（如有），然后一起发送。照片不需要上传到本网页。</p></div></div>
 <div class="inline-note">工作分工：本网页只采集资料、生成提示词；ChatGPT 根据你在对话中上传的顾客照片和提示词进行分析。九型风格与九季色彩由 AI 独立判断，不要求发型师预先判型。</div>
 </section>
-<div class="footer">朱老师发型研究室 · 专业发型师工作流 · V1.2</div>
+<div class="footer">朱老师发型研究室 · 专业发型师工作流 · V1.3</div>
 </main>
 <script>
 (function(){
