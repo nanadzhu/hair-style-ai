@@ -224,7 +224,7 @@ textarea.output{
 </section>
 
 <section class="panel">
-<div class="panel-head"><div class="num">03</div><div><h2>具体设计要求</h2><p class="sub">只填最终图片必须遵守的长度、纹理、发色和打理要求。</p></div></div>
+<div class="panel-head"><div class="num">02</div><div><h2>顾客想要的效果</h2><p class="sub">只填最终图片必须遵守的长度、纹理、发色和打理要求。</p></div></div>
 <div class="grid-two">
 <div class="field"><label class="field-title" for="targetLength">希望保留的长度</label><select class="select" id="targetLength"><option value="">请选择</option><option>尽量保留现有长度</option><option>极短发</option><option>超短发</option><option>齐耳</option><option>齐下巴</option><option>齐肩</option><option>锁骨</option><option>胸上</option><option>胸下</option><option>超长发（腰部及以下）</option><option>暂时无法判断</option></select></div>
 <div class="field"><label class="field-title" for="textureGoal">希望的头发纹理</label><select class="select" id="textureGoal"><option value="">请选择</option><option>直发</option><option>自然纹理</option><option>自然大弯</option><option>波浪卷</option><option>法式卷</option><option>羊毛卷</option><option>暂时无法判断</option></select></div>
@@ -233,37 +233,23 @@ textarea.output{
 <div class="field"><label class="field-title" for="dyeMethod">希望的染色方式</label><select class="select" id="dyeMethod"><option value="">请选择</option><option>普通整体染发</option><option>设计染（挑染、渐变、光染等）</option><option>不考虑染发</option><option>暂时无法判断</option></select></div>
 <div class="field"><label class="field-title" for="careTime">每天愿意花多少时间打理？</label><select class="select" id="careTime"><option value="">请选择</option><option>几乎不打理，洗吹即可</option><option>每天约5分钟</option><option>每天约10—15分钟</option><option>愿意认真吹风并使用造型品</option><option>暂时无法判断</option></select></div>
 </div>
-<div class="field"><span class="field-title">顾客明确不接受的效果（按需勾选）</span><p class="hint">按顾客真实顾虑勾选；未勾选不代表顾客一定接受。</p>
-<details><summary>烫发效果与日常打理</summary><div class="check-group">
-<label><input type="checkbox" name="dislike" value="小卷显老气">小卷显老气</label>
-<label><input type="checkbox" name="dislike" value="过于夸张、不适合职场">过于夸张、不适合职场</label>
-<label><input type="checkbox" name="dislike" value="卷度位置不对、显脸大">卷度位置不对、显脸大</label>
-<label><input type="checkbox" name="dislike" value="回家不会吹、不好打理">回家不会吹、不好打理</label>
-<label><input type="checkbox" name="dislike" value="烫后毛躁、炸毛">烫后毛躁、炸毛</label>
-<label><input type="checkbox" name="dislike" value="卷度维持时间短">卷度维持时间短</label>
-<label><input type="checkbox" name="dislike" value="需要复杂造型">需要复杂造型</label>
-</div></details>
-<details><summary>染发颜色与掉色</summary><div class="check-group">
-<label><input type="checkbox" name="dislike" value="染完发黄、橘调重">染完发黄、橘调重</label>
-<label><input type="checkbox" name="dislike" value="颜色饱和度太高、太扎眼">颜色饱和度太高、太扎眼</label>
-<label><input type="checkbox" name="dislike" value="掉色快或掉色后发花">掉色快或掉色后发花</label>
-<label><input type="checkbox" name="dislike" value="颜色衬得脸色暗沉、显憔悴">颜色衬得脸色暗沉、显憔悴</label>
-<label><input type="checkbox" name="dislike" value="新生黑发根分界明显">新生黑发根分界明显</label>
-</div></details>
-<details><summary>发质、头皮与剪发长度</summary><div class="check-group">
-<label><input type="checkbox" name="dislike" value="不喜欢漂发">不喜欢漂发</label>
-<label><input type="checkbox" name="dislike" value="染后干枯、打结">染后干枯、打结</label>
-<label><input type="checkbox" name="dislike" value="担心药水气味刺激">担心药水气味刺激</label>
-<label><input type="checkbox" name="dislike" value="头皮刺痛或敏感">头皮刺痛或敏感</label>
-<label><input type="checkbox" name="dislike" value="剪得太短">剪得太短</label>
-</div></details>
-</div>
+<div class="field"><span class="field-title">顾客明确不接受的效果（可多选）</span><p class="hint">只勾选顾客明确说过的限制。</p><div class="check-group">
+<label><input type="checkbox" name="dislike" value="不要剪得太短">不要剪得太短</label>
+<label><input type="checkbox" name="dislike" value="不要小卷或夸张卷">不要小卷或夸张卷</label>
+<label><input type="checkbox" name="dislike" value="不要复杂打理">不要复杂打理</label>
+<label><input type="checkbox" name="dislike" value="不要毛躁炸毛">不要毛躁炸毛</label>
+<label><input type="checkbox" name="dislike" value="发色不要偏黄或橘">发色不要偏黄或橘</label>
+<label><input type="checkbox" name="dislike" value="不接受漂发">不接受漂发</label>
+<label><input type="checkbox" name="dislike" value="不想要明显黑发根分界">不想要明显黑发根分界</label>
+<label><input type="checkbox" name="dislike" value="头皮敏感或不接受刺激性药水">头皮敏感 / 不接受刺激性药水</label>
+<label><input type="checkbox" name="dislike" value="担心染后干枯打结">担心染后干枯打结</label>
+</div></div></div>
 </section>
 
 
 
 <section class="panel">
-<div class="panel-head"><div class="num">05</div><div><h2>生成完整 AI 设计提示词</h2><p class="sub">自动整合所有资料、理论分析要求、发型方案要求和锁脸规则。你只需复制一次。</p></div></div>
+<div class="panel-head"><div class="num">03</div><div><h2>生成完整 AI 设计提示词</h2><p class="sub">自动整合所有资料、理论分析要求、发型方案要求和锁脸规则。你只需复制一次。</p></div></div>
 <div class="actions"><button class="btn" type="button" id="generate">生成完整提示词</button><button class="btn secondary" type="button" id="copy" disabled>一键复制</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button><button class="btn ghost" type="button" id="reset">清空重来</button></div>
 <div id="result" class="result"><div class="field"><label class="field-title" for="promptOutput">生成后的完整提示词</label><textarea id="promptOutput" class="output" readonly></textarea><p class="notice" id="status">下一步：复制整段提示词，在 ChatGPT 中附上顾客正面照和侧面照（如有），然后一起发送。照片不需要上传到本网页。</p></div></div>
 <div class="inline-note">工作分工：本网页只采集资料、生成提示词；ChatGPT 根据你在对话中上传的顾客照片和提示词进行分析。九型风格与九季色彩由 AI 独立判断，不要求发型师预先判型。</div>
@@ -273,13 +259,8 @@ textarea.output{
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const value=id=>{const el=$(id);return el&&el.value?el.value:"未提供"};
+const value=id=>{const el=$(id);return el&&el.value?el.value:""};
 const checked=name=>Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(el=>el.value);
-const need=$("needType");
-need.addEventListener("change",function(){
-$("changeBox").classList.toggle("visible",need.value==="change");
-$("problemBox").classList.toggle("visible",need.value==="problem");
-});
 function buildPrompt(){
 const dislikes=checked("dislike");
 const dislikeText=dislikes.length?dislikes.join("；"):"未特别说明";
@@ -332,7 +313,6 @@ $("reset").addEventListener("click",function(){
 if(!confirm("确定清空本页已选择的资料吗？"))return;
 document.querySelectorAll("select").forEach(el=>el.value="");
 document.querySelectorAll('input[type="checkbox"]').forEach(el=>el.checked=false);
-$("changeBox").classList.remove("visible");$("problemBox").classList.remove("visible");
 $("result").classList.remove("visible");$("promptOutput").value="";$("copy").disabled=true;
 document.querySelectorAll("details").forEach(el=>el.open=false);
 });
