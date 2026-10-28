@@ -202,7 +202,7 @@ textarea.output{
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.1 · 拍照版</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.2 · 功能修复版</div></header>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍三张照片，<br><span>生成真人发型设计包。</span></h1><p>AI先判断九型风格、初筛九季色彩，再设计三套发型。发质发量等技术评估放到选定方案之后。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填身高、打理习惯、语音或文字需求 → 一键打包发给 ChatGPT。</p></aside></section>
 <section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照作为效果图主要底图。</p></div></div>
 <div class="photo-grid">
@@ -219,9 +219,9 @@ textarea.output{
 <p class="notice" id="status" aria-live="polite">请先拍摄或选择正面照。首次打包需要联网加载ZIP组件；不会上传顾客照片。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
 <div class="inline-note">本版为现场试用：网页负责拍照、语音尝试识别、打包；ChatGPT负责分析和图像编辑。效果图必须尽量保留顾客原脸，不能用相似模特替代；ZIP内的照片能否直接用于编辑需实际测试。</div></section>
-<div class="footer">朱老师发型研究室 · V2.1 拍照版</div>
+<div class="footer">朱老师发型研究室 · V2.2 功能修复版</div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"><\/script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
@@ -282,5 +282,5 @@ $("share").onclick=async()=>{if(!zipFile)return;try{await navigator.share({files
 $("copy").onclick=async()=>{refresh();try{await navigator.clipboard.writeText($("promptOutput").value);$("status").textContent="指令已复制。";}catch(e){$("promptOutput").focus();$("promptOutput").select();$("status").textContent="请手动复制选中的文字。";}};
 $("openChat").onclick=()=>window.open("https://chatgpt.com/","_blank","noopener,noreferrer");
 })();
-<\/script>
+</script>
 </body></html>
