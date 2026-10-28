@@ -198,17 +198,17 @@ textarea.output{
 }
 
 .photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.photo-card{border:1px solid var(--line);border-radius:15px;padding:12px;background:#faf9f3}.photo-card img{width:100%;aspect-ratio:3/4;object-fit:contain;background:#eeece4;border-radius:10px;display:none}.photo-card img.ready{display:block}.photo-card input{width:100%;font-size:12px;margin-top:8px}.text-entry{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;background:white;resize:vertical}.mini-status{font-size:12px;color:var(--muted);margin-top:8px}.photo-card strong{font-size:14px}@media(max-width:680px){.photo-grid{grid-template-columns:1fr}.photo-card{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:8px}.photo-card img{grid-column:2;grid-row:1/4;max-height:180px}.photo-card input{grid-column:1}}
-</style>
+.camera-actions{display:flex;flex-direction:column;gap:8px;margin-top:8px}.camera-button,.album-button{display:block;text-align:center;border-radius:11px;padding:10px 8px;cursor:pointer;font-weight:700;font-size:13px}.camera-button{background:var(--accent-deep);color:white}.album-button{background:#e8eade;color:#414b39}.camera-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.photo-card{position:relative}@media(max-width:680px){.camera-actions{grid-column:1;grid-row:2/4}}</style>
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.0 · 试用版</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.1 · 拍照版</div></header>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍三张照片，<br><span>生成真人发型设计包。</span></h1><p>AI先判断九型风格、初筛九季色彩，再设计三套发型。发质发量等技术评估放到选定方案之后。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填身高、打理习惯、语音或文字需求 → 一键打包发给 ChatGPT。</p></aside></section>
 <section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照作为效果图主要底图。</p></div></div>
 <div class="photo-grid">
-<div class="photo-card"><strong>正面照（必选）</strong><input id="front" type="file" accept="image/*" aria-label="正面照拍摄或选择"><img id="frontPreview" alt="正面照预览"><span class="mini-status" id="frontInfo">未选择</span></div>
-<div class="photo-card"><strong>侧面照（建议）</strong><input id="side" type="file" accept="image/*" aria-label="侧面照拍摄或选择"><img id="sidePreview" alt="侧面照预览"><span class="mini-status" id="sideInfo">未选择</span></div>
-<div class="photo-card"><strong>带肩半身照（建议）</strong><input id="shoulder" type="file" accept="image/*" aria-label="半身照拍摄或选择"><img id="shoulderPreview" alt="半身照预览"><span class="mini-status" id="shoulderInfo">未选择</span></div>
+<div class="photo-card"><strong>正面照（必选）</strong><div class="camera-actions"><label class="camera-button" for="frontCamera">📷 拍正面照</label><label class="album-button" for="front">从相册选择</label></div><input class="camera-input" id="frontCamera" type="file" accept="image/*" capture="user" aria-label="拍正面照"><input class="camera-input" id="front" type="file" accept="image/*" aria-label="从相册选择正面照"><img id="frontPreview" alt="正面照预览"><span class="mini-status" id="frontInfo">未选择</span></div>
+<div class="photo-card"><strong>侧面照（建议）</strong><div class="camera-actions"><label class="camera-button" for="sideCamera">📷 拍侧面照</label><label class="album-button" for="side">从相册选择</label></div><input class="camera-input" id="sideCamera" type="file" accept="image/*" capture="user" aria-label="拍侧面照"><input class="camera-input" id="side" type="file" accept="image/*" aria-label="从相册选择侧面照"><img id="sidePreview" alt="侧面照预览"><span class="mini-status" id="sideInfo">未选择</span></div>
+<div class="photo-card"><strong>带肩半身照（建议）</strong><div class="camera-actions"><label class="camera-button" for="shoulderCamera">📷 拍带肩半身照</label><label class="album-button" for="shoulder">从相册选择</label></div><input class="camera-input" id="shoulderCamera" type="file" accept="image/*" capture="user" aria-label="拍带肩半身照"><input class="camera-input" id="shoulder" type="file" accept="image/*" aria-label="从相册选择带肩半身照"><img id="shoulderPreview" alt="半身照预览"><span class="mini-status" id="shoulderInfo">未选择</span></div>
 </div><p class="hint">请取得顾客同意。照片在本机浏览器处理，不会由本网页上传到服务器；只有你主动分享设计包时才会离开设备。</p></section>
 <section class="panel"><div class="panel-head"><div class="num">02</div><div><h2>顾客基本需求</h2><p class="sub">只采集会影响设计方向的信息，不让发型师提前判型。</p></div></div>
 <div class="grid-two"><div class="field"><label class="field-title" for="height">身高（厘米）</label><input class="select" id="height" type="number" min="120" max="210" inputmode="numeric" placeholder="例如 163"></div><div class="field"><label class="field-title" for="care">日常打理习惯</label><select class="select" id="care"><option value="">请选择</option><option>洗吹即可，不额外造型</option><option>愿意每天花5分钟</option><option>愿意每天花10—15分钟</option><option>愿意认真造型</option></select></div></div>
@@ -219,7 +219,7 @@ textarea.output{
 <p class="notice" id="status" aria-live="polite">请先拍摄或选择正面照。首次打包需要联网加载ZIP组件；不会上传顾客照片。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
 <div class="inline-note">本版为现场试用：网页负责拍照、语音尝试识别、打包；ChatGPT负责分析和图像编辑。效果图必须尽量保留顾客原脸，不能用相似模特替代；ZIP内的照片能否直接用于编辑需实际测试。</div></section>
-<div class="footer">朱老师发型研究室 · V2.0 试用版</div>
+<div class="footer">朱老师发型研究室 · V2.1 拍照版</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"><\/script>
 <script>
@@ -241,8 +241,8 @@ return [
 }
 function refresh(){ $("promptOutput").value=prompt();}
 ["height","care","wishes"].forEach(id=>$(id).addEventListener("input",refresh));refresh();
-for(const id of photoIds){$(id).addEventListener("change",()=>{
-const file=$(id).files[0],img=$(id+"Preview");if(img.dataset.url)URL.revokeObjectURL(img.dataset.url);
+for(const id of photoIds){for(const sourceId of [id,id+"Camera"])$(sourceId).addEventListener("change",()=>{
+const file=$(sourceId).files[0],img=$(id+"Preview");if(file){const other=$(sourceId===id?id+"Camera":id);other.value="";}if(img.dataset.url)URL.revokeObjectURL(img.dataset.url);
 img.classList.remove("ready");img.removeAttribute("src");img.dataset.url="";
 if(file){const url=URL.createObjectURL(file);img.src=url;img.dataset.url=url;img.classList.add("ready");$(id+"Info").textContent=file.name+" · "+(file.size/1048576).toFixed(1)+"MB";}
 else $(id+"Info").textContent="未选择";
@@ -265,11 +265,11 @@ const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;can
 return await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error("图片压缩失败")),"image/jpeg",.88));
 }finally{image.close();}}
 $("export").onclick=async()=>{
-if(!$("front").files[0]){$("status").textContent="请先拍摄或选择顾客正面照。";return;}
+if(!($("front").files[0]||$("frontCamera").files[0])){$("status").textContent="请先拍摄或选择顾客正面照。";return;}
 if(typeof JSZip==="undefined"){$("status").textContent="ZIP组件未加载，请检查网络后刷新重试。";return;}
 const button=$("export");button.disabled=true;$("status").textContent="正在整理照片，请稍候……";
 try{const zip=new JSZip(),names={front:"01-正面原图",side:"02-侧面",shoulder:"03-带肩半身"};
-for(const id of photoIds){const f=$(id).files[0];if(!f)continue;const jpg=await optimize(f);zip.file(names[id]+".jpg",jpg);}
+for(const id of photoIds){const f=$(id).files[0]||$(id+"Camera").files[0];if(!f)continue;const jpg=await optimize(f);zip.file(names[id]+".jpg",jpg);}
 zip.file("00-请先阅读-AI分析指令.txt",prompt());zip.file("使用说明.txt","请将此ZIP文件上传ChatGPT并要求读取照片与指令。若ChatGPT不能直接读取ZIP，请解压后上传照片和TXT。顾客照片仅用于获得授权的发型设计分析。");
 zipBlob=await zip.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:3}});
 zipFile=new File([zipBlob],"朱老师-顾客发型设计包.zip",{type:"application/zip"});
