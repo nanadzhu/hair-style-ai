@@ -204,8 +204,8 @@ textarea.output{
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.9 · 原图直传测试版</div></header>
-<section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍两张照片，<br><span>生成真人发型设计。</span></h1><p>保留顾客原图，按一张参考发型生成一张效果图。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填写需求 → 分享原图、复制指令到 ChatGPT。</p></aside></section>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V3.0 · 四方案设计流程版</div></header>
+<section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>采集顾客信息，<br><span>设计四套发型方案。</span></h1><p>AI依据九型风格与九季色彩提出三套专业方案，加上顾客参考款，共四套方案。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>采集照片和需求 → AI分析并规划四套方案 → 四张效果图完成后统一对比。</p></aside></section>
 <section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照包含脸和肩部，是效果图唯一底图；侧面照用于辅助判断。</p></div></div>
 <div class="photo-grid">
 <div class="photo-card"><strong>正面照（必选）</strong><div class="camera-actions"><label class="camera-button" for="frontCamera">📷 拍正面照</label><label class="album-button" for="front">从相册选择</label></div><input class="camera-input" id="frontCamera" type="file" accept="image/*" capture="environment" aria-label="拍正面照"><input class="camera-input" id="front" type="file" accept="image/*" aria-label="从相册选择正面照"><img id="frontPreview" alt="正面照预览"><span class="mini-status" id="frontInfo">未选择</span></div>
@@ -216,13 +216,13 @@ textarea.output{
 <div class="grid-two"><div class="field"><label class="field-title" for="height">身高（厘米）</label><input class="select" id="height" type="number" min="120" max="210" inputmode="numeric" placeholder="例如 163"></div><div class="field"><label class="field-title" for="care">日常打理习惯</label><select class="select" id="care"><option value="">请选择</option><option>洗吹即可，不额外造型</option><option>愿意每天花5分钟</option><option>愿意每天花10—15分钟</option><option>愿意认真造型</option></select></div></div>
 <div class="field"><label class="field-title" for="wishes">顾客想法与禁忌（语音转文字或手动输入）</label><textarea class="text-entry" id="wishes" placeholder="例如：我想短一点，不要小卷，不想每天花时间吹造型……"></textarea>
 <div class="actions"><button type="button" class="btn secondary" id="startVoice">🎙 开始语音转文字</button><button type="button" class="btn ghost" id="stopVoice" disabled>结束录入</button></div><p class="mini-status" id="voiceStatus" aria-live="polite">语音识别依赖浏览器支持；苹果手机如不支持，请直接使用键盘麦克风听写或打字。</p></div></section>
-<section class="panel"><div class="panel-head"><div class="num">＋</div><div><h2>顾客参考发型（选填）</h2><p class="sub">上传一张顾客喜欢的发型作为本次参考。</p></div></div><div class="grid-two"><div class="field"><label class="field-title" for="refHair1">参考发型一</label><input class="select" id="refHair1" type="file" accept="image/*"><img id="refHair1Preview" class="reference-preview" alt="参考发型一预览"><p class="hint" id="refHair1Info">未选择（可跳过）</p></div><div class="field" style="display:none"><label class="field-title" for="refHair2">参考发型二</label><input class="select" id="refHair2" type="file" accept="image/*"><img id="refHair2Preview" class="reference-preview" alt="参考发型二预览"><p class="hint" id="refHair2Info">未选择（可跳过）</p></div></div><p class="hint">参考图只用于还原发型，不使用参考人物的脸、衣服或背景。</p></section>
-<section class="panel"><div class="panel-head"><div class="num">03</div><div><h2>生成并发送设计包</h2><p class="sub">不再使用ZIP。先分享两张原始照片到ChatGPT，再复制粘贴AI指令。侧面照只供辅助分析。</p></div></div>
-<div class="field"><label class="field-title" for="testMode">本次生成任务</label><select class="select" id="testMode"><option value="ref1">参考发型一（先测这一套）</option></select><p class="hint">一次只处理一张参考图、输出一张效果图。禁止生成整张海报或虚构原图。</p></div><div class="actions"><button class="btn" type="button" id="export">下载两张原始照片</button><button class="btn secondary" type="button" id="share">分享两张原始照片</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button></div>
-<p class="notice" id="status" aria-live="polite">先上传正面照和参考发型图。分享功能取决于手机浏览器支持；也可以分别下载照片。</p>
+<section class="panel"><div class="panel-head"><div class="num">＋</div><div><h2>顾客参考发型（第四套方案）</h2><p class="sub">前三套由AI独立设计；顾客上传的一张参考发型作为第四套。</p></div></div><div class="grid-two"><div class="field"><label class="field-title" for="refHair1">参考发型一</label><input class="select" id="refHair1" type="file" accept="image/*"><img id="refHair1Preview" class="reference-preview" alt="参考发型一预览"><p class="hint" id="refHair1Info">未选择（可跳过）</p></div><div class="field" style="display:none"><label class="field-title" for="refHair2">参考发型二</label><input class="select" id="refHair2" type="file" accept="image/*"><img id="refHair2Preview" class="reference-preview" alt="参考发型二预览"><p class="hint" id="refHair2Info">未选择（可跳过）</p></div></div><p class="hint">参考图只用于还原发型，不使用参考人物的脸、衣服或背景。</p></section>
+<section class="panel"><div class="panel-head"><div class="num">03</div><div><h2>AI分析与四套方案</h2><p class="sub">先复制四方案专业分析指令；上传顾客照片和顾客参考图到ChatGPT。网页不能自动控制ChatGPT生成四张图，须在对话中逐张生成后一起展示。</p></div></div>
+<div class="field"><label class="field-title" for="testMode">本次生成任务</label><select class="select" id="testMode"><option value="analysis">完整专业分析＋四套设计与效果图任务</option><option value="ref1">仅测试顾客参考款（第四套）</option></select><p class="hint">完整任务：前三套AI设计，第四套按顾客参考图；四张分别生成、最终一起展示。</p></div><div class="actions"><button class="btn" type="button" id="export">下载两张原始照片</button><button class="btn secondary" type="button" id="share">分享两张原始照片</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button></div>
+<p class="notice" id="status" aria-live="polite">请先复制完整AI指令，再将顾客原图和参考图作为图片附件发送到ChatGPT；网页本身不自动生成图片。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
 <div class="inline-note">网页只负责本地采集和导出原始照片，不会自动将照片传给ChatGPT。请在ChatGPT中确认两张照片都作为图片附件显示，再粘贴指令并生成一张效果图。</div></section>
-<div class="footer">朱老师发型研究室 · V2.9 原图直传测试版</div>
+<div class="footer">朱老师发型研究室 · V3.0 四方案设计流程版</div>
 </main>
 
 <script>
@@ -232,7 +232,7 @@ const photoIds=["front","side"];const referenceIds=["refHair1","refHair2"];let z
 function prompt(){
 const mode=$("testMode").value;
 const base=[
-"【朱老师发型设计助手｜单张任务】",
+"【朱老师发型设计助手｜专业设计任务】",
 "顾客正面原图为唯一人物依据；侧面照片只作辅助观察。必须先确认已读取真实图片文件。如果没有读取到图片，请停止图像生成并说明缺少哪个文件。",
 "身高："+($("height").value?$("height").value+"cm":"未提供"),
 "日常打理："+($("care").value||"未提供"),
@@ -242,13 +242,16 @@ const base=[
 "若无法基于实际上传的顾客照片执行编辑，不要假装完成；说明局限即可。生成效果不等于像素级锁脸。"
 ];
 if(mode==="analysis"){
-base.push("【本次只分析，不生成图片】先独立判断脸型、五官曲直、量感、头肩比例、奕含九型候选与依据；九季色彩只做照片初筛并标注不确定性。给出三套不同的剪烫方向，分别说明长度、刘海、轮廓、纹理、适合与不适合、在店与回家打理差异、维护周期。发质发量和烫染史未知时不得编造。");
+base[0]="【朱老师发型设计助手｜完整四方案专业设计任务】";
+base.push("先确认已实际收到顾客正面原图、可选侧面原图及顾客参考发型图。未收到任何必要图片时明确指出，禁止凭空假装分析或生成。");
+base.push("第一阶段：根据照片与已提供的顾客需求，独立分析脸型、五官曲直、量感、头肩比例、奕含九型风格候选及依据；九季色彩仅作照片初筛，注明光线与照片无法替代现场色彩测试。发质、发量、过往烫染史未知则明确标为待确认，不得编造。");
+base.push("第二阶段：AI独立提出三套差异清晰的发型方案，分别给出长度、轮廓、刘海、层次、纹理、发色方向、适合及不适合原因、日常打理与维护周期。第四套忠实依据顾客提供的参考发型，分析与顾客条件的适配度，不要擅自替换。");
+base.push("第三阶段：以顾客正面真实照片为唯一人物底图，分别编辑四张效果图：1、2、3为三套AI推荐；4为顾客参考款。一次只编辑一张，四张完成后统一呈现供对比。四张均尽量保持同一人的五官、脸型、神态、衣服、背景和取景一致；只改变头发，不要拼图、虚构人物或套用参考模特的脸。每张标明方案编号及文字设计依据，文字不要画进效果图。");
+base.push("若当前环境无法直接编辑原图或无法一次完成四张，清楚说明实际完成数量和阻碍，不得声称已完成。");
 }else{
-const n=mode==="ref2"?2:1;
-base.push("【本次唯一任务：参考发型"+n+"一对一移植】只使用文件名为“参考发型"+n+"-原始素材”的图片作为发型参考，绝对不要混入另一张参考图。");
-base.push("先直接编辑顾客正面原图，仅修改头发。严格参考指定图片的长度、刘海、分缝、外轮廓、蓬松位置、层次、发尾方向、卷度与颜色；仅允许为适配顾客头部视角做必要调整。");
-base.push("只输出【一张】顾客正面换发型效果图，保持原照片取景、人物姿态、衣服、背景；不要在同一张生成图片中放原图、参考图、标题、文字或其他视角。");
-base.push("先完成这一张，再简短说明与参考发型的差异。不要同时生成三套AI自主设计，也不要生成另一张参考款。");
+base[0]="【朱老师发型设计助手｜仅测试第四套顾客参考款】";
+base.push("本次只根据顾客提供的参考发型图编辑顾客正面原图，仅改变头发，忠实参考长度、轮廓、刘海、层次、纹理和颜色。");
+base.push("仅输出一张效果图，不生成前三套；尽量保留人物五官、衣服、背景与取景。");
 }
 return base.join("\\n");
 }
