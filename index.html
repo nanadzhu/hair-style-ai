@@ -204,7 +204,7 @@ textarea.output{
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.5 · 参考发型扩展版</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.6 · 参考发型忠实移植版</div></header>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍两张照片，<br><span>生成真人发型设计包。</span></h1><p>AI先判断九型风格、初筛九季色彩，再设计三套发型。发质发量等技术评估放到选定方案之后。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填身高、打理习惯、语音或文字需求 → 一键打包发给 ChatGPT。</p></aside></section>
 <section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照包含脸和肩部，是效果图唯一底图；侧面照用于辅助判断。</p></div></div>
 <div class="photo-grid">
@@ -222,7 +222,7 @@ textarea.output{
 <p class="notice" id="status" aria-live="polite">请先拍摄或选择正面照。首次打包需要联网加载ZIP组件；不会上传顾客照片。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
 <div class="inline-note">本版为现场试用：网页负责拍照、语音尝试识别、打包；ChatGPT负责分析和图像编辑。效果图必须尽量保留顾客原脸，不能用相似模特替代；ZIP内的照片能否直接用于编辑需实际测试。</div></section>
-<div class="footer">朱老师发型研究室 · V2.5 参考发型扩展版</div>
+<div class="footer">朱老师发型研究室 · V2.6 参考发型忠实移植版</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
@@ -243,11 +243,13 @@ const lines=[
 "发质、发量、烫染史等属于后续现场技术可行性评估，不应凭照片虚构，也不必在此阶段预先填写。"
 ];
 if(referenceCount){
-lines.push("【新增：顾客指定参考发型，不替代原有三套】");
-lines.push("设计包内有"+referenceCount+"张以“参考发型”命名的图片。请在完整完成原有三套AI自主设计和三张效果图后，额外为每张参考发型各生成一张顾客本人效果图。");
-lines.push("额外方案严格还原各参考图的头发长度、刘海、层次、卷度、纹理、发色与轮廓；仅允许为贴合顾客头型和视角做必要调整，不得擅自重新设计参考发型。");
-lines.push("参考图只用于头发，不得采用参考人物的脸、衣服或背景。所有效果图均使用顾客正面原图作为唯一人物底图，尽量只编辑头发、锁定顾客五官和皮肤；无法可靠锁脸或还原时明确说明失败。");
-lines.push("最终将原有3套AI自主设计与新增"+referenceCount+"套顾客指定发型分组放在一起，共"+(3+referenceCount)+"套；不要让参考图影响原有三套方案。");
+lines.push("【独立任务B：顾客参考发型原样移植——不是重新设计】");
+lines.push("设计包包含"+referenceCount+"张顾客亲自指定的参考发型图片，分别名为“参考发型1.jpg”“参考发型2.jpg”（以实际存在文件为准）。必须实际查看每一张参考图，不能凭文件名、顾客描述或AI想象补造发型。");
+lines.push("逐张一对一处理：参考发型1.jpg→参考款效果图1；参考发型2.jpg→参考款效果图2。每张效果图的头发必须直接以对应参考图为视觉依据，不能将两张图混合，也不能把参考图换成AI自选的相似款。");
+lines.push("移植时必须尽可能忠实保留对应参考图的长短、外轮廓、分缝、刘海长度和形状、两侧形态、后区层次、卷度大小与方向、发尾走势、蓬松位置、纹理及发色。禁止自行改成更适合顾客的款式，禁止擅自剪短、加长、改刘海、改变卷型或重构层次。只有为匹配顾客头部大小、视角、透视和发际线而必需的贴合调整可以进行。");
+lines.push("顾客正面原图是人物身份与画面唯一底图。只将参考图的头发移植到顾客头部，原脸、五官、骨相、皮肤、表情、衣服和背景尽量不变；严禁拿参考图模特的脸替换顾客，严禁重新生成一位相似人物。");
+lines.push("在展示参考款效果前逐张核对：①是否真的使用对应参考图片；②发长、刘海、卷型和外轮廓是否与对应参考图一致；③顾客是否还是原来本人。若无法可靠读取参考图或忠实完成移植，直接标记“该参考款未完成”，不要凭空生成替代图片，不要宣称成功。");
+lines.push("【独立任务A：原有三套AI自主设计】仍按前文原有指令独立执行，绝不受参考图影响。最终将任务A的3套自主设计与任务B的"+referenceCount+"套指定参考发型分组放在一起，预期共"+(3+referenceCount)+"套；未成功的参考款须明确标为未完成，不得拿别的发型凑数。");
 }
 return lines.join("\n");
 }
