@@ -221,10 +221,10 @@ textarea.output{
 <div class="actions"><button type="button" class="btn secondary" id="startVoice">🎙 开始语音转文字</button><button type="button" class="btn ghost" id="stopVoice" disabled>结束录入</button></div><p class="mini-status" id="voiceStatus" aria-live="polite">语音识别依赖浏览器支持；苹果手机如不支持，请直接使用键盘麦克风听写或打字。</p></div></section>
 <section class="panel"><div class="panel-head"><div class="num">＋</div><div><h2>顾客参考发型（第四套方案）</h2><p class="sub">前三套由AI独立设计；顾客上传的一张参考发型作为第四套。</p></div></div><div class="grid-two"><div class="field"><label class="field-title" for="refHair1">参考发型一</label><input class="select" id="refHair1" type="file" accept="image/*"><img id="refHair1Preview" class="reference-preview" alt="参考发型一预览"><p class="hint" id="refHair1Info">未选择（可跳过）</p></div><div class="field" style="display:none"><label class="field-title" for="refHair2">参考发型二</label><input class="select" id="refHair2" type="file" accept="image/*"><img id="refHair2Preview" class="reference-preview" alt="参考发型二预览"><p class="hint" id="refHair2Info">未选择（可跳过）</p></div></div><p class="hint">参考图只用于还原发型，不使用参考人物的脸、衣服或背景。</p></section>
 <section class="panel"><div class="panel-head"><div class="num">03</div><div><h2>AI分析与四套方案</h2><p class="sub">先复制四方案专业分析指令；上传顾客照片和顾客参考图到ChatGPT。网页不能自动控制ChatGPT生成四张图，须在对话中逐张生成后一起展示。</p></div></div>
-<div class="field"><label class="field-title" for="testMode">本次生成任务</label><select class="select" id="testMode"><option value="analysis">完整专业分析＋四套设计与效果图任务</option><option value="ref1">仅测试顾客参考款（第四套）</option></select><p class="hint">完整任务：前三套AI设计，第四套按顾客参考图；四张分别生成、最终一起展示。</p></div><div class="actions"><button class="btn" type="button" id="prepareChat">① 复制完整指令并打开 ChatGPT</button></div><p class="hint">一步准备：先复制全部分析内容，再打开 ChatGPT；照片仍需在 ChatGPT 中由你主动添加。</p><div class="actions"><button class="btn" type="button" id="export">下载两张原始照片</button><button class="btn secondary" type="button" id="share">分享两张原始照片</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button></div>
-<p class="notice" id="status" aria-live="polite">请先复制完整AI指令，再将顾客原图和参考图作为图片附件发送到ChatGPT；网页本身不自动生成图片。</p>
+<div class="field"><label class="field-title" for="testMode">本次生成任务</label><select class="select" id="testMode"><option value="analysis">完整专业分析＋四套设计与效果图任务</option><option value="ref1">仅测试顾客参考款（第四套）</option></select><p class="hint">完整任务：前三套AI设计，第四套按顾客参考图；四张分别生成、最终一起展示。</p></div><div class="actions"><button class="btn" type="button" id="prepareChat">① 打包照片和完整指令</button></div><p class="hint">一键生成一个ZIP设计包，包含原始照片和完整分析指令；只需把这个ZIP上传到ChatGPT。</p><div class="actions"><button class="btn" type="button" id="export">下载两张原始照片</button><button class="btn secondary" type="button" id="share">分享两张原始照片</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button></div>
+<p class="notice" id="status" aria-live="polite">请选择顾客正面照，然后点击“打包照片和完整指令”。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
-<div class="inline-note">网页只负责本地采集和导出原始照片，不会自动将照片传给ChatGPT。请在ChatGPT中确认两张照片都作为图片附件显示，再粘贴指令并分别生成四张效果图，保存后可放入下方对比区。</div></section>
+<div class="inline-note">设计包在本机生成，不上传服务器。你需要主动将ZIP发送到ChatGPT；如ChatGPT无法直接读取压缩包，可解压后再上传其中的图片和指令。</div></section>
 <section class="panel" id="comparison"><div class="panel-head"><div class="num">04</div><div><h2>四套发型效果对比</h2><p class="sub">四张效果图由 ChatGPT 生成后，在这里分别选入并统一展示。网页不会假装已经生成图片。</p></div></div><div class="compare-grid">
 <div class="compare-card"><h3>方案 1 · AI 专业设计</h3><p>由 AI 独立推荐的第 1 套</p><img id="compareImg1" alt="方案1效果图"><label class="field-title" for="compareFile1">选择第 1 张生成的效果图</label><input id="compareFile1" type="file" accept="image/*"><textarea id="compareReason1" placeholder="记录这套方案的设计理由、打理方式和维护周期"></textarea></div><div class="compare-card"><h3>方案 2 · AI 专业设计</h3><p>由 AI 独立推荐的第 2 套</p><img id="compareImg2" alt="方案2效果图"><label class="field-title" for="compareFile2">选择第 2 张生成的效果图</label><input id="compareFile2" type="file" accept="image/*"><textarea id="compareReason2" placeholder="记录这套方案的设计理由、打理方式和维护周期"></textarea></div><div class="compare-card"><h3>方案 3 · AI 专业设计</h3><p>由 AI 独立推荐的第 3 套</p><img id="compareImg3" alt="方案3效果图"><label class="field-title" for="compareFile3">选择第 3 张生成的效果图</label><input id="compareFile3" type="file" accept="image/*"><textarea id="compareReason3" placeholder="记录这套方案的设计理由、打理方式和维护周期"></textarea></div><div class="compare-card"><h3>方案 4 · 顾客参考款</h3><p>按照顾客提供的参考发型</p><img id="compareImg4" alt="方案4效果图"><label class="field-title" for="compareFile4">选择第 4 张生成的效果图</label><input id="compareFile4" type="file" accept="image/*"><textarea id="compareReason4" placeholder="记录这套方案的设计理由、打理方式和维护周期"></textarea></div></div><p class="compare-note" id="compareStatus" aria-live="polite">目前已载入 0/4 张效果图。照片只在当前设备预览，不会自动上传服务器。</p></section>
 <div class="footer">朱老师发型研究室 · V3.1 四方案快捷准备版</div>
@@ -304,11 +304,52 @@ $("status").textContent="照片已交给系统分享界面；请确认ChatGPT里
 };
 $("copy").onclick=async()=>{refresh();try{await navigator.clipboard.writeText($("promptOutput").value);$("status").textContent="指令已复制。";}catch(e){$("promptOutput").focus();$("promptOutput").select();$("status").textContent="请手动复制选中的文字。";}};
 $("openChat").onclick=()=>window.open("https://chatgpt.com/","_blank","noopener,noreferrer");
-$("prepareChat").onclick=async()=>{
+// Build a standards-compliant stored ZIP locally without an API or third-party CDN.
+const crcTable=(()=>{const t=[];for(let n=0;n<256;n++){let x=n;for(let k=0;k<8;k++)x=x&1?0xedb88320^(x>>>1):x>>>1;t[n]=x>>>0;}return t;})();
+function crc32(bytes){let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0;}
+function makeZip(entries){
+const enc=new TextEncoder(),parts=[],directory=[];let offset=0;
+for(const entry of entries){
+const name=enc.encode(entry.name),data=entry.data,crc=crc32(data);
+const local=new Uint8Array(30+name.length),v=new DataView(local.buffer);
+v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0,true);v.setUint16(8,0,true);
+v.setUint32(14,crc,true);v.setUint32(18,data.length,true);v.setUint32(22,data.length,true);v.setUint16(26,name.length,true);local.set(name,30);
+parts.push(local,data);
+const dir=new Uint8Array(46+name.length),d=new DataView(dir.buffer);
+d.setUint32(0,0x02014b50,true);d.setUint16(4,20,true);d.setUint16(6,20,true);
+d.setUint32(16,crc,true);d.setUint32(20,data.length,true);d.setUint32(24,data.length,true);
+d.setUint16(28,name.length,true);d.setUint32(42,offset,true);dir.set(name,46);directory.push(dir);
+offset+=local.length+data.length;
+}
+const dirSize=directory.reduce((n,p)=>n+p.length,0),end=new Uint8Array(22),v=new DataView(end.buffer);
+v.setUint32(0,0x06054b50,true);v.setUint16(8,entries.length,true);v.setUint16(10,entries.length,true);
+v.setUint32(12,dirSize,true);v.setUint32(16,offset,true);
+return new Blob([...parts,...directory,end],{type:"application/zip"});
+}
+function imageExtension(f){const match=f.name.match(/\\.(jpg|jpeg|png|webp|heic|heif)$/i);return match?"."+match[1].toLowerCase():(f.type==="image/png"?".png":".jpg");}
+async function bundle(){
+const front=$("front").files[0]||$("frontCamera").files[0],side=$("side").files[0]||$("sideCamera").files[0],ref=$("refHair1").files[0];
+if(!front)throw Error("请先选择顾客正面照。");
+if($("testMode").value==="ref1"&&!ref)throw Error("仅测试参考款时，请先选择顾客参考发型图。");
 refresh();
-try{await navigator.clipboard.writeText($("promptOutput").value);$("status").textContent="完整四方案指令已复制。请在 ChatGPT 中添加顾客照片和参考图，再粘贴发送。";}
-catch(e){$("promptOutput").focus();$("promptOutput").select();$("status").textContent="浏览器未允许自动复制，已选中指令，请先手动复制，再打开 ChatGPT。";return;}
-window.open("https://chatgpt.com/","_blank","noopener,noreferrer");
+const entries=[];
+for(const [name,file] of [["01-顾客正面原图",front],["02-顾客侧面原图",side],["03-顾客参考发型原图",ref]]){
+if(file)entries.push({name:name+imageExtension(file),data:new Uint8Array(await file.arrayBuffer())});
+}
+let instructions=$("promptOutput").value;
+if(!ref&&$("testMode").value==="analysis")instructions+="\\n注意：本次未提供顾客参考发型图，第四套参考款暂不能生成，不得虚构参考图。";
+entries.push({name:"00-请先阅读-AI分析指令.txt",data:new TextEncoder().encode(instructions)});
+entries.push({name:"使用说明.txt",data:new TextEncoder().encode("请将整个ZIP上传到ChatGPT，并要求读取其中的真实照片与AI分析指令。若当前ChatGPT环境不能直接读取ZIP，请解压后上传其中的图片和TXT。顾客照片须经本人授权使用。")});
+return makeZip(entries);
+}
+$("prepareChat").onclick=async()=>{
+const button=$("prepareChat");button.disabled=true;$("status").textContent="正在本机打包原始照片与分析指令……";
+try{
+const blob=await bundle(),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download="朱老师-顾客发型设计包.zip";document.body.appendChild(a);a.click();a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),60000);
+$("status").textContent="设计包已生成（"+(blob.size/1048576).toFixed(1)+"MB）。只需把这个ZIP文件上传到ChatGPT，无需单独复制指令或下载原图。";
+}catch(e){$("status").textContent="打包失败："+e.message;}finally{button.disabled=false;}
 };
 
 // Local-only four-image comparison; no image-generation API is implied.
