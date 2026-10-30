@@ -249,7 +249,7 @@ lines.push("额外方案严格还原各参考图的头发长度、刘海、层�
 lines.push("参考图只用于头发，不得采用参考人物的脸、衣服或背景。所有效果图均使用顾客正面原图作为唯一人物底图，尽量只编辑头发、锁定顾客五官和皮肤；无法可靠锁脸或还原时明确说明失败。");
 lines.push("最终将原有3套AI自主设计与新增"+referenceCount+"套顾客指定发型分组放在一起，共"+(3+referenceCount)+"套；不要让参考图影响原有三套方案。");
 }
-return lines.join("\\n");
+return lines.join("\n");
 }
 function refresh(){ $("promptOutput").value=prompt();}
 ["height","care","wishes"].forEach(id=>$(id).addEventListener("input",refresh));refresh();
