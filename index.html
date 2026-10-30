@@ -204,7 +204,7 @@ textarea.output{
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.6 · 参考发型忠实移植版</div></header>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.7 · 原始素材保真版</div></header>
 <section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍两张照片，<br><span>生成真人发型设计包。</span></h1><p>AI先判断九型风格、初筛九季色彩，再设计三套发型。发质发量等技术评估放到选定方案之后。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填身高、打理习惯、语音或文字需求 → 一键打包发给 ChatGPT。</p></aside></section>
 <section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照包含脸和肩部，是效果图唯一底图；侧面照用于辅助判断。</p></div></div>
 <div class="photo-grid">
@@ -222,7 +222,7 @@ textarea.output{
 <p class="notice" id="status" aria-live="polite">请先拍摄或选择正面照。首次打包需要联网加载ZIP组件；不会上传顾客照片。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
 <div class="inline-note">本版为现场试用：网页负责拍照、语音尝试识别、打包；ChatGPT负责分析和图像编辑。效果图必须尽量保留顾客原脸，不能用相似模特替代；ZIP内的照片能否直接用于编辑需实际测试。</div></section>
-<div class="footer">朱老师发型研究室 · V2.6 参考发型忠实移植版</div>
+<div class="footer">朱老师发型研究室 · V2.7 原始素材保真版</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
@@ -244,10 +244,11 @@ const lines=[
 ];
 if(referenceCount){
 lines.push("【独立任务B：顾客参考发型原样移植——不是重新设计】");
-lines.push("设计包包含"+referenceCount+"张顾客亲自指定的参考发型图片，分别名为“参考发型1.jpg”“参考发型2.jpg”（以实际存在文件为准）。必须实际查看每一张参考图，不能凭文件名、顾客描述或AI想象补造发型。");
-lines.push("逐张一对一处理：参考发型1.jpg→参考款效果图1；参考发型2.jpg→参考款效果图2。每张效果图的头发必须直接以对应参考图为视觉依据，不能将两张图混合，也不能把参考图换成AI自选的相似款。");
+lines.push("设计包包含"+referenceCount+"张顾客亲自指定的原始参考图片，文件名以“参考发型1-原始素材”“参考发型2-原始素材”开头（扩展名依上传文件而定）。必须直接读取并保留这些原始素材，不得重绘或用AI生成图替换参考原图。");
+lines.push("逐张一对一处理：参考发型1原始素材→参考款效果图1；参考发型2原始素材→参考款效果图2。每张效果图的头发必须直接以对应原始参考图为视觉依据，不能将两张图混合，也不能把参考图换成AI自选的相似款。");
 lines.push("移植时必须尽可能忠实保留对应参考图的长短、外轮廓、分缝、刘海长度和形状、两侧形态、后区层次、卷度大小与方向、发尾走势、蓬松位置、纹理及发色。禁止自行改成更适合顾客的款式，禁止擅自剪短、加长、改刘海、改变卷型或重构层次。只有为匹配顾客头部大小、视角、透视和发际线而必需的贴合调整可以进行。");
 lines.push("顾客正面原图是人物身份与画面唯一底图。只将参考图的头发移植到顾客头部，原脸、五官、骨相、皮肤、表情、衣服和背景尽量不变；严禁拿参考图模特的脸替换顾客，严禁重新生成一位相似人物。");
+lines.push("不要生成包含虚构原图、虚构侧面/背面、相似模特的整张海报或九宫格。原始照片展示必须直接使用原文件；生成结果与原始素材分开标注。优先单张处理和核验，不能做到真实局部编辑时不要以整图重绘冒充。");
 lines.push("在展示参考款效果前逐张核对：①是否真的使用对应参考图片；②发长、刘海、卷型和外轮廓是否与对应参考图一致；③顾客是否还是原来本人。若无法可靠读取参考图或忠实完成移植，直接标记“该参考款未完成”，不要凭空生成替代图片，不要宣称成功。");
 lines.push("【独立任务A：原有三套AI自主设计】仍按前文原有指令独立执行，绝不受参考图影响。最终将任务A的3套自主设计与任务B的"+referenceCount+"套指定参考发型分组放在一起，预期共"+(3+referenceCount)+"套；未成功的参考款须明确标为未完成，不得拿别的发型凑数。");
 }
@@ -284,9 +285,11 @@ if(!($("front").files[0]||$("frontCamera").files[0])){$("status").textContent="�
 if(typeof JSZip==="undefined"){$("status").textContent="ZIP组件未加载，请检查网络后刷新重试。";return;}
 const button=$("export");button.disabled=true;$("status").textContent="正在整理照片，请稍候……";
 try{const zip=new JSZip(),names={front:"01-正面原图",side:"02-侧面"};
-for(const id of photoIds){const f=$(id).files[0]||$(id+"Camera").files[0];if(!f)continue;const jpg=await optimize(f);zip.file(names[id]+".jpg",jpg);}
-for(let i=0;i<referenceIds.length;i++){const f=$(referenceIds[i]).files[0];if(!f)continue;const jpg=await optimize(f);zip.file("参考发型"+(i+1)+".jpg",jpg);}
-zip.file("00-请先阅读-AI分析指令.txt",prompt());zip.file("使用说明.txt","请将此ZIP文件上传ChatGPT并要求读取照片与指令。若ChatGPT不能直接读取ZIP，请解压后上传照片和TXT。顾客照片仅用于获得授权的发型设计分析。");
+const originalExt=f=>{const t=(f.type||"").toLowerCase();if(t==="image/png")return ".png";if(t==="image/webp")return ".webp";if(t==="image/heic")return ".heic";if(t==="image/heif")return ".heif";if(t==="image/jpeg")return ".jpg";const m=f.name.match(/\\.(jpe?g|png|webp|heic|heif)$/i);return m?"."+m[1].toLowerCase():"";};
+for(const id of photoIds){const f=$(id).files[0]||$(id+"Camera").files[0];if(!f)continue;zip.file(names[id]+originalExt(f),f);}
+for(let i=0;i<referenceIds.length;i++){const f=$(referenceIds[i]).files[0];if(!f)continue;zip.file("参考发型"+(i+1)+"-原始素材"+originalExt(f),f);}
+zip.file("00-请先阅读-AI分析指令.txt",prompt());
+zip.file("原始素材说明.txt","本设计包中的顾客正面照、侧面照和顾客参考发型均为上传文件的原始字节，不经过压缩、重绘或AI生成。参考发型1/2是原始素材，必须直接显示原图，不得用生成图冒充。注意：网页只负责收集打包，不具备自动精确抠发、像素级锁脸或真实发型移植能力。若后续图像工具无法实现，请如实说明，不得以重新生成整个人像替代。");zip.file("使用说明.txt","请将此ZIP文件上传ChatGPT并要求读取照片与指令。若ChatGPT不能直接读取ZIP，请解压后上传照片和TXT。顾客照片仅用于获得授权的发型设计分析。");
 zipBlob=await zip.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:3}});
 zipFile=new File([zipBlob],"朱老师-顾客发型设计包.zip",{type:"application/zip"});
 const url=URL.createObjectURL(zipBlob),a=document.createElement("a");a.href=url;a.download=zipFile.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
