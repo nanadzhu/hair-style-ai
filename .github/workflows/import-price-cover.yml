@@ -1,0 +1,25 @@
+name: Import selected cover
+on:
+  push:
+    paths:
+      - '.github/workflows/import-price-cover.yml'
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Save selected cover
+        env:
+          COVER_URL: 'https://media.canva.com/v2/image-resize/format:PNG/height:200/quality:100/uri:ifs%3A%2F%2FM%2F06d01cd2-bf69-4e4b-8325-29cffc711be4/watermark:F/width:133?csig=AAAAAAAAAAAAAAAAAAAAAE9pP5eDH-JtO_Pm3lpQTaZteSVVPjg5t_S9Eih45i8G&exp=1793376860&osig=AAAAAAAAAAAAAAAAAAAAAOQuGdqW7inaKYeY9WqcFdu3v63KQbBCKe-16jGVw5I7&signer=media-rpc&token=AAIAAU0AJDA2ZDAxY2QyLWJmNjktNGU0Yi04MzI1LTI5Y2ZmYzcxMWJlNAAAAAABoY2XN2DRnPgnKRShNNjnrokblM_0gyHya7RsYkiHfoYj0XNrrg&x-canva-quality=thumbnail'
+        run: |
+          curl --fail --location --retry 3 "$COVER_URL" -o price-book/cover.png
+          file price-book/cover.png
+      - name: Commit cover
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add price-book/cover.png
+          git commit -m 'Add selected magazine cover' || exit 0
+          git push
