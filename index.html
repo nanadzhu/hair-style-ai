@@ -199,46 +199,45 @@ textarea.output{
 
 .photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.photo-card{border:1px solid var(--line);border-radius:15px;padding:12px;background:#faf9f3}.photo-card img{width:100%;aspect-ratio:3/4;object-fit:contain;background:#eeece4;border-radius:10px;display:none}.photo-card img.ready{display:block}.photo-card input{width:100%;font-size:12px;margin-top:8px}.text-entry{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;background:white;resize:vertical}.mini-status{font-size:12px;color:var(--muted);margin-top:8px}.photo-card strong{font-size:14px}@media(max-width:680px){.photo-grid{grid-template-columns:1fr}.photo-card{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:8px}.photo-card img{grid-column:2;grid-row:1/4;max-height:180px}.photo-card input{grid-column:1}}
 .camera-actions{display:flex;flex-direction:column;gap:8px;margin-top:8px}.camera-button,.album-button{display:block;text-align:center;border-radius:11px;padding:10px 8px;cursor:pointer;font-weight:700;font-size:13px}.camera-button{background:var(--accent-deep);color:white}.album-button{background:#e8eade;color:#414b39}.camera-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.photo-card{position:relative}@media(max-width:680px){.camera-actions{grid-column:1;grid-row:2/4}}
-.hair-canvas-wrap{max-width:480px;margin:10px auto}.hair-canvas-wrap canvas{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:12px;touch-action:none;background:#ecebe5}.hair-canvas-wrap canvas:empty{min-height:40px}
+
 </style>
 </head>
 <body>
 <main class="wrap">
-<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.3 · 局部锁脸测试版</div></header>
-<section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍三张照片，<br><span>生成真人发型设计包。</span></h1><p>AI先判断九型风格、初筛九季色彩，再设计三套发型。发质发量等技术评估放到选定方案之后。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填身高、打理习惯、语音或文字需求 → 一键打包发给 ChatGPT。</p></aside></section>
-<section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照作为效果图主要底图。</p></div></div>
+<header><div class="brand"><div class="logo">朱</div><div>朱老师发型设计助手<div class="sub">发型师专用 · 真人发型预览采集</div></div></div><div class="status">V2.4 · 双照简化版</div></header>
+<section class="hero"><div class="hero-copy"><div class="eyebrow">PHOTO FIRST · AI DESIGN</div><h1>拍两张照片，<br><span>生成真人发型设计包。</span></h1><p>AI先判断九型风格、初筛九季色彩，再设计三套发型。发质发量等技术评估放到选定方案之后。</p></div><aside class="hero-note"><strong>现场只做三件事</strong><p>拍照或选照片 → 填身高、打理习惯、语音或文字需求 → 一键打包发给 ChatGPT。</p></aside></section>
+<section class="panel"><div class="panel-head"><div class="num">01</div><div><h2>顾客照片</h2><p class="sub">手机点击选择文件，可使用相机拍摄或从相册选择。正面照包含脸和肩部，是效果图唯一底图；侧面照用于辅助判断。</p></div></div>
 <div class="photo-grid">
 <div class="photo-card"><strong>正面照（必选）</strong><div class="camera-actions"><label class="camera-button" for="frontCamera">📷 拍正面照</label><label class="album-button" for="front">从相册选择</label></div><input class="camera-input" id="frontCamera" type="file" accept="image/*" capture="environment" aria-label="拍正面照"><input class="camera-input" id="front" type="file" accept="image/*" aria-label="从相册选择正面照"><img id="frontPreview" alt="正面照预览"><span class="mini-status" id="frontInfo">未选择</span></div>
 <div class="photo-card"><strong>侧面照（建议）</strong><div class="camera-actions"><label class="camera-button" for="sideCamera">📷 拍侧面照</label><label class="album-button" for="side">从相册选择</label></div><input class="camera-input" id="sideCamera" type="file" accept="image/*" capture="environment" aria-label="拍侧面照"><input class="camera-input" id="side" type="file" accept="image/*" aria-label="从相册选择侧面照"><img id="sidePreview" alt="侧面照预览"><span class="mini-status" id="sideInfo">未选择</span></div>
-<div class="photo-card"><strong>带肩半身照（建议）</strong><div class="camera-actions"><label class="camera-button" for="shoulderCamera">📷 拍带肩半身照</label><label class="album-button" for="shoulder">从相册选择</label></div><input class="camera-input" id="shoulderCamera" type="file" accept="image/*" capture="environment" aria-label="拍带肩半身照"><input class="camera-input" id="shoulder" type="file" accept="image/*" aria-label="从相册选择带肩半身照"><img id="shoulderPreview" alt="半身照预览"><span class="mini-status" id="shoulderInfo">未选择</span></div>
+
 </div><p class="hint">请取得顾客同意。照片在本机浏览器处理，不会由本网页上传到服务器；只有你主动分享设计包时才会离开设备。</p></section>
 <section class="panel"><div class="panel-head"><div class="num">02</div><div><h2>顾客基本需求</h2><p class="sub">只采集会影响设计方向的信息，不让发型师提前判型。</p></div></div>
 <div class="grid-two"><div class="field"><label class="field-title" for="height">身高（厘米）</label><input class="select" id="height" type="number" min="120" max="210" inputmode="numeric" placeholder="例如 163"></div><div class="field"><label class="field-title" for="care">日常打理习惯</label><select class="select" id="care"><option value="">请选择</option><option>洗吹即可，不额外造型</option><option>愿意每天花5分钟</option><option>愿意每天花10—15分钟</option><option>愿意认真造型</option></select></div></div>
 <div class="field"><label class="field-title" for="wishes">顾客想法与禁忌（语音转文字或手动输入）</label><textarea class="text-entry" id="wishes" placeholder="例如：我想短一点，不要小卷，不想每天花时间吹造型……"></textarea>
 <div class="actions"><button type="button" class="btn secondary" id="startVoice">🎙 开始语音转文字</button><button type="button" class="btn ghost" id="stopVoice" disabled>结束录入</button></div><p class="mini-status" id="voiceStatus" aria-live="polite">语音识别依赖浏览器支持；苹果手机如不支持，请直接使用键盘麦克风听写或打字。</p></div></section>
-<section class="panel"><div class="panel-head"><div class="num">03</div><div><h2>生成并发送设计包</h2><p class="sub">把三张照片和简洁AI指令打包为一个ZIP文件，上传至ChatGPT。ZIP无法读取时可分别上传照片和文本。</p></div></div>
+<section class="panel"><div class="panel-head"><div class="num">03</div><div><h2>生成并发送设计包</h2><p class="sub">把两张照片和简洁AI指令打包为一个ZIP文件，上传至ChatGPT。ZIP无法读取时可分别上传照片和文本。</p></div></div>
 <div class="actions"><button class="btn" type="button" id="export">一键生成设计包（ZIP）</button><button class="btn secondary" type="button" id="share" disabled>分享设计包</button><button class="btn ghost" type="button" id="openChat">打开 ChatGPT</button></div>
 <p class="notice" id="status" aria-live="polite">请先拍摄或选择正面照。首次打包需要联网加载ZIP组件；不会上传顾客照片。</p>
 <details><summary>查看或复制AI分析指令（备用）</summary><textarea id="promptOutput" class="output" readonly></textarea><div class="actions"><button class="btn secondary" type="button" id="copy">复制指令</button></div></details>
 <div class="inline-note">本版为现场试用：网页负责拍照、语音尝试识别、打包；ChatGPT负责分析和图像编辑。效果图必须尽量保留顾客原脸，不能用相似模特替代；ZIP内的照片能否直接用于编辑需实际测试。</div></section>
-<section class="panel" id="faceLockPanel"><div class="panel-head"><div class="num">04</div><div><h2>真人锁脸局部合成（新增测试）</h2><p class="sub">保留原始正面照的脸、衣服和背景；只把候选图中你手工涂选的头发区域合成进来。原有拍照、语音和打包功能不变。</p></div></div><div class="field"><label class="field-title" for="candidateHair">选择AI生成的同角度候选发型图</label><input class="select" type="file" accept="image/*" id="candidateHair"><p class="hint">先在上方选择顾客正面原图。候选图须与原图视角、五官位置基本对齐，否则不能得到真实的发型对比。</p></div><div class="field"><span class="field-title">在原图上用手指涂出“允许替换的头发区域”</span><div class="hair-canvas-wrap"><canvas id="hairMaskCanvas" aria-label="在原图上标记需要替换的头发区域"></canvas></div><p class="hint">绿色区域才会使用候选图像素。请不要涂到脸部、耳朵、皮肤、衣服或背景；脸部区域不会自动识别，需要你人工避开。</p></div><div class="actions"><button type="button" class="btn secondary" id="clearHairMask">清除涂选</button><button type="button" class="btn" id="applyHairMask">合成并保留原脸</button><button type="button" class="btn ghost" id="downloadHairResult" disabled>保存合成图</button></div><div class="hair-canvas-wrap"><canvas id="hairResultCanvas" aria-label="局部合成结果" style="display:none"></canvas></div><p class="notice" id="hairStatus" aria-live="polite">此功能只负责局部合成，不会自动生成新发型；未涂选区域使用原照片像素，涂选区域需要人工检查。</p></section>
-<div class="footer">朱老师发型研究室 · V2.3 局部锁脸测试版</div>
+<div class="footer">朱老师发型研究室 · V2.4 双照简化版</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const photoIds=["front","side","shoulder"];let zipBlob=null,zipFile=null;
+const photoIds=["front","side"];let zipBlob=null,zipFile=null;
 function prompt(){
 return [
-"你是朱老师发型设计助手。请读取本设计包内的顾客照片，正面照是人物身份与效果图主要底图，侧面和带肩半身照只作比例与轮廓辅助。",
+"你是朱老师发型设计助手。请读取本设计包内的顾客照片，正面照是人物身份与效果图主要底图，侧面照只作头型与侧面轮廓辅助。",
 "先独立分析五官曲直、量感、脸型、头肩比例和整体形体，判断奕含九型主风格：小直少年、中直睿智、大直戏剧；小曲少女、中曲优雅、大曲浪漫；小中间灵动、中中间自然、大中间华贵。动静仅辅助。",
 "九季色彩只做照片初筛：浅暖春、浅中春夏、浅冷夏；中暖春秋、中中柔和、中冷夏冬；深暖秋、深中秋冬、深冷冬。不能可靠判断时说明待现场色布确认。",
 "身高："+($("height").value?$("height").value+"cm":"未提供"),
 "打理习惯："+($("care").value||"未提供"),
 "顾客本人需求与禁忌："+($("wishes").value.trim()||"未提供，请根据人物条件独立设计"),
 "简短输出：1.关键五官及头肩比例观察；2.最可能九型及一句依据；3.九季初筛及不确定性；4.三套明显不同、可操作的发型方案（长度、刘海、层次、轮廓、纹理、发色、打理难度）。不写长篇理论。",
-"随后请尝试生成三套这位顾客本人的发型效果图。必须分别以正面原图为基础局部编辑，只改变头发；尽可能保持原脸五官、骨相、肤质、表情、年龄、衣服、背景完全一致，不能美颜、磨皮、换脸或使用其他模特。若不能可靠锁脸须说明，不能将相似人物图冒充本人效果图。",
+"随后请尝试直接对本设计包内的真实正面照片进行三套发型的局部图像编辑：原图为唯一底图，锁定脸部、皮肤、衣服、肩膀和背景，仅编辑头发区域。由ChatGPT自行完成必要的头发蒙版、边缘融合和图像处理，不要要求发型师或顾客手动涂选蒙版、上传候选发型图或自行合成。必须保留原脸的五官、骨相、肤质、表情、年龄和自然不对称；不得磨皮、美颜、换脸或换成相似模特。先验证人物一致性，再展示效果。若当前工具无法可靠局部编辑，请明确说明失败，不要生成其他人物充数。",
 "发质、发量、烫染史等属于后续现场技术可行性评估，不应凭照片虚构，也不必在此阶段预先填写。"
 ].join("\n");
 }
@@ -271,7 +270,7 @@ $("export").onclick=async()=>{
 if(!($("front").files[0]||$("frontCamera").files[0])){$("status").textContent="请先拍摄或选择顾客正面照。";return;}
 if(typeof JSZip==="undefined"){$("status").textContent="ZIP组件未加载，请检查网络后刷新重试。";return;}
 const button=$("export");button.disabled=true;$("status").textContent="正在整理照片，请稍候……";
-try{const zip=new JSZip(),names={front:"01-正面原图",side:"02-侧面",shoulder:"03-带肩半身"};
+try{const zip=new JSZip(),names={front:"01-正面原图",side:"02-侧面"};
 for(const id of photoIds){const f=$(id).files[0]||$(id+"Camera").files[0];if(!f)continue;const jpg=await optimize(f);zip.file(names[id]+".jpg",jpg);}
 zip.file("00-请先阅读-AI分析指令.txt",prompt());zip.file("使用说明.txt","请将此ZIP文件上传ChatGPT并要求读取照片与指令。若ChatGPT不能直接读取ZIP，请解压后上传照片和TXT。顾客照片仅用于获得授权的发型设计分析。");
 zipBlob=await zip.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:3}});
@@ -285,19 +284,6 @@ $("share").onclick=async()=>{if(!zipFile)return;try{await navigator.share({files
 $("copy").onclick=async()=>{refresh();try{await navigator.clipboard.writeText($("promptOutput").value);$("status").textContent="指令已复制。";}catch(e){$("promptOutput").focus();$("promptOutput").select();$("status").textContent="请手动复制选中的文字。";}};
 $("openChat").onclick=()=>window.open("https://chatgpt.com/","_blank","noopener,noreferrer");
 
-/* 局部合成是独立附加模块；不改变原有采集、语音、打包逻辑。 */
-const maskCanvas=$("hairMaskCanvas"),resultCanvas=$("hairResultCanvas"),maskCtx=maskCanvas.getContext("2d"),resultCtx=resultCanvas.getContext("2d");
-let originalImage=null,candidateImage=null,maskPixels=null,painting=false,brush=25;
-function sourcePhoto(){return $("front").files[0]||$("frontCamera").files[0];}
-function loadImage(file){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);resolve(img);};img.onerror=()=>{URL.revokeObjectURL(url);reject(Error("图片读取失败"));};img.src=url;});}
-async function setupHairCanvas(){const file=sourcePhoto();if(!file)return;try{originalImage=await loadImage(file);const max=1000,scale=Math.min(1,max/Math.max(originalImage.naturalWidth,originalImage.naturalHeight));const w=Math.round(originalImage.naturalWidth*scale),h=Math.round(originalImage.naturalHeight*scale);maskCanvas.width=resultCanvas.width=w;maskCanvas.height=resultCanvas.height=h;brush=Math.max(12,Math.round(w*.035));maskPixels=new Uint8Array(w*h);maskCtx.drawImage(originalImage,0,0,w,h);resultCanvas.style.display="none";$("downloadHairResult").disabled=true;$("hairStatus").textContent="原始正面照已加载。选择候选发型图，再涂选允许替换的头发区域。";}catch(e){$("hairStatus").textContent=e.message;}}
-for(const id of ["front","frontCamera"])$(id).addEventListener("change",setupHairCanvas);
-$("candidateHair").addEventListener("change",async()=>{const f=$("candidateHair").files[0];if(!f)return;try{candidateImage=await loadImage(f);$("hairStatus").textContent="候选图已读取。请在原图上涂选头发区域，再点击合成。";}catch(e){$("hairStatus").textContent=e.message;}});
-function paintHair(e){if(!painting||!maskPixels)return;e.preventDefault();const rect=maskCanvas.getBoundingClientRect(),x=(e.clientX-rect.left)*maskCanvas.width/rect.width,y=(e.clientY-rect.top)*maskCanvas.height/rect.height,r=brush;const left=Math.max(0,Math.floor(x-r)),right=Math.min(maskCanvas.width-1,Math.ceil(x+r)),top=Math.max(0,Math.floor(y-r)),bottom=Math.min(maskCanvas.height-1,Math.ceil(y+r));for(let yy=top;yy<=bottom;yy++)for(let xx=left;xx<=right;xx++)if((xx-x)**2+(yy-y)**2<=r*r)maskPixels[yy*maskCanvas.width+xx]=1;maskCtx.fillStyle="rgba(91,176,99,.48)";maskCtx.beginPath();maskCtx.arc(x,y,r,0,Math.PI*2);maskCtx.fill();}
-maskCanvas.addEventListener("pointerdown",e=>{painting=true;maskCanvas.setPointerCapture(e.pointerId);paintHair(e);});maskCanvas.addEventListener("pointermove",paintHair);maskCanvas.addEventListener("pointerup",()=>painting=false);maskCanvas.addEventListener("pointercancel",()=>painting=false);
-$("clearHairMask").onclick=()=>{if(!originalImage)return;maskPixels.fill(0);maskCtx.clearRect(0,0,maskCanvas.width,maskCanvas.height);maskCtx.drawImage(originalImage,0,0,maskCanvas.width,maskCanvas.height);resultCanvas.style.display="none";$("downloadHairResult").disabled=true;};
-$("applyHairMask").onclick=()=>{if(!originalImage||!candidateImage||!maskPixels){$("hairStatus").textContent="请先选择原始正面照和候选发型图。";return;}const w=maskCanvas.width,h=maskCanvas.height,source=document.createElement("canvas"),sc=source.getContext("2d",{willReadFrequently:true});source.width=w;source.height=h;sc.drawImage(candidateImage,0,0,w,h);const candidate=sc.getImageData(0,0,w,h);resultCtx.clearRect(0,0,w,h);resultCtx.drawImage(originalImage,0,0,w,h);const result=resultCtx.getImageData(0,0,w,h);let count=0;for(let i=0;i<maskPixels.length;i++){if(!maskPixels[i])continue;count++;const p=i*4;result.data[p]=candidate.data[p];result.data[p+1]=candidate.data[p+1];result.data[p+2]=candidate.data[p+2];}if(!count){$("hairStatus").textContent="请先用手指涂选要替换的头发区域。";return;}resultCtx.putImageData(result,0,0);resultCanvas.style.display="block";$("downloadHairResult").disabled=false;$("hairStatus").textContent="合成完成：未涂选区域保留原图像素。请重点检查发际线、耳朵和脸部边缘；若候选图不对齐，请不要当作锁脸成功。";};
-$("downloadHairResult").onclick=()=>{resultCanvas.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="顾客真人锁脸-局部合成.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);},"image/png");};
 })();
 </script>
 </body></html>
